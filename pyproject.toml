@@ -1,0 +1,21 @@
+[project]
+name = "ai-scratchpad"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "anthropic[vertex]>=0.40",
+    "google-cloud-aiplatform>=1.152.0",
+    "google-genai>=1.75.0",
+    "opentelemetry-api",
+    "opentelemetry-exporter-gcp-trace",
+    "opentelemetry-instrumentation-google-genai",
+    "opentelemetry-instrumentation-requests",
+    "opentelemetry-instrumentation-httpx",
+    "opentelemetry-propagator-gcp",
+    "opentelemetry-sdk",
+    "python-dotenv>=1.0.0",
+    "rich>=13.7",
+]
+
