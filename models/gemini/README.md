@@ -1,9 +1,11 @@
-# Gemini 3 cookbook
+# Gemini 3/3.5 cookbook
 
-Small, self-contained demos of Gemini 3 features on Vertex AI, plus the observability wiring
+Small, self-contained demos of Gemini 3/3.5 features on Vertex AI, plus the observability wiring
 (Cloud Trace, BigQuery request/response logging, per-caller token attribution) and the SQL to
 report on it. Each demo is meant to be **read and copied** — the interesting part is one or two
 lines of config; the rest is shared plumbing in `_common.py`.
+
+Models are the latest of each tier only — Gemini Pro (`gemini-3.1-pro-preview`), Gemini Flash (`gemini-3.5-flash`), and Gemini Flash-Lite (`gemini-3.1-flash-lite`) — and non-model-specific demos default to **Flash** (`gemini-3.5-flash`).
 
 ## What's here
 
