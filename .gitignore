@@ -188,3 +188,11 @@ SESSION_UPDATE.md
 
 # Claude Code guidance (local only)
 CLAUDE.md
+.chainlit
+
+# ADK session databases and state
+.adk/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite-journal

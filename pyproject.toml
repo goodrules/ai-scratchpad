@@ -3,9 +3,10 @@ name = "ai-scratchpad"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.13,<3.14"
 dependencies = [
     "anthropic[vertex]>=0.40",
+    "anthropic>=0.101.0",
     "google-cloud-aiplatform>=1.152.0",
     "google-genai>=1.75.0",
     "opentelemetry-api",
@@ -15,7 +16,17 @@ dependencies = [
     "opentelemetry-instrumentation-httpx",
     "opentelemetry-propagator-gcp",
     "opentelemetry-sdk",
-    "python-dotenv>=1.0.0",
+    "python-dotenv>=1.2.2",
     "rich>=13.7",
+    "fastapi>=0.135.1",
+    "googlemaps>=4.10.0",
+    "google-adk>=2.0.0",
+    "pandas>=3.0.1",
+    "requests>=2.32.0",
+    "scikit-learn>=1.8.0",
+    "tqdm>=4.67.3",
+    "uvicorn[standard]>=0.41.0",
+    "websockets>=15.0.1",
+    "chainlit>=2.10.0",
 ]
 
