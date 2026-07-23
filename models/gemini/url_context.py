@@ -1,4 +1,4 @@
-"""gemini-3.5-flash + URL Context."""
+"""gemini-3.6-flash + URL Context."""
 
 from __future__ import annotations
 

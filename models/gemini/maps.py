@@ -1,4 +1,4 @@
-"""gemini-3.5-flash + Google Maps grounding (lat/lng resolved via structured output)."""
+"""gemini-3.6-flash + Google Maps grounding (lat/lng resolved via structured output)."""
 
 from __future__ import annotations
 
@@ -31,7 +31,6 @@ def resolve_coordinates(client, location: str) -> Coordinates:
                 )
             ),
         )
-    print_response("coordinates", response)
     return response.parsed
 
 

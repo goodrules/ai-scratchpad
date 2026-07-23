@@ -4,22 +4,16 @@ from __future__ import annotations
 
 import argparse
 
-import code_execution
-import maps
-import models
-import search
-import thinking
-import url_context
+import importlib
 
-# Registry: demo name -> the run() entrypoint in that module. Each value is also runnable on its
-# own via `uv run models/gemini/<name>.py`.
+# Registry: demo name -> runner lambda. Lazily imported so --help and single runs are fast.
 DEMOS = {
-    "models": models.run,
-    "thinking": thinking.run,
-    "search": search.run,
-    "maps": maps.run,
-    "code_execution": code_execution.run,
-    "url_context": url_context.run,
+    "models": lambda: importlib.import_module("models").run(),
+    "thinking": lambda: importlib.import_module("thinking").run(),
+    "search": lambda: importlib.import_module("search").run(),
+    "maps": lambda: importlib.import_module("maps").run(),
+    "code_execution": lambda: importlib.import_module("code_execution").run(),
+    "url_context": lambda: importlib.import_module("url_context").run(),
 }
 
 # Convenience aliases that expand to several demos.

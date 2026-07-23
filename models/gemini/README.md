@@ -5,7 +5,7 @@ Small, self-contained demos of Gemini 3/3.5 features on Vertex AI, plus the obse
 report on it. Each demo is meant to be **read and copied** — the interesting part is one or two
 lines of config; the rest is shared plumbing in `_common.py`.
 
-Models are the latest of each tier only — Gemini Pro (`gemini-3.1-pro-preview`), Gemini Flash (`gemini-3.5-flash`), and Gemini Flash-Lite (`gemini-3.1-flash-lite`) — and non-model-specific demos default to **Flash** (`gemini-3.5-flash`).
+Models are the latest of each tier only — Gemini Pro (`gemini-3.1-pro-preview`), Gemini Flash (`gemini-3.6-flash`), and Gemini Flash-Lite (`gemini-3.5-flash-lite`) — and non-model-specific demos default to **Flash** (`gemini-3.6-flash`).
 
 ## What's here
 

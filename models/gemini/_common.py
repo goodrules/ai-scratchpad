@@ -33,7 +33,10 @@ from opentelemetry.sdk.trace.export import BatchSpanProcessor
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.propagate import set_global_textmap
 from opentelemetry.propagators.cloud_trace_propagator import CloudTraceFormatPropagator
-from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
+try:
+    from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
+except Exception:
+    CloudTraceSpanExporter = None
 from opentelemetry.propagators.composite import CompositePropagator
 from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
 
@@ -68,6 +71,8 @@ set_global_textmap(CompositePropagator([
 #    token attribution is done via request labels instead (see default_labels below).
 _trace_proj = _trace_project()
 try:
+    if not CloudTraceSpanExporter:
+        raise RuntimeError("CloudTraceSpanExporter unavailable")
     if not _trace_proj:
         raise RuntimeError("no project resolved (set GOOGLE_CLOUD_PROJECT or configure ADC)")
     provider.add_span_processor(
@@ -78,14 +83,23 @@ except Exception as e:
 
 tracer = trace.get_tracer("gemini-demos")
 
-from opentelemetry.instrumentation.google_genai import GoogleGenAiSdkInstrumentor
-from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
-from opentelemetry.instrumentation.requests import RequestsInstrumentor
+try:
+    from opentelemetry.instrumentation.google_genai import GoogleGenAiSdkInstrumentor
+    GoogleGenAiSdkInstrumentor().instrument()
+except Exception:
+    pass
 
-# Automatically instrument all Google Gen AI SDK clients and underlying HTTP transports to propagate trace context
-GoogleGenAiSdkInstrumentor().instrument()
-HTTPXClientInstrumentor().instrument()
-RequestsInstrumentor().instrument()
+try:
+    from opentelemetry.instrumentation.httpx import HTTPXClientInstrumentor
+    HTTPXClientInstrumentor().instrument()
+except Exception:
+    pass
+
+try:
+    from opentelemetry.instrumentation.requests import RequestsInstrumentor
+    RequestsInstrumentor().instrument()
+except Exception:
+    pass
 
 from google import genai
 
@@ -94,8 +108,8 @@ from google import genai
 # Latest model per tier (prefer GA over preview). DEFAULT aliases one of these so demos can
 # switch their default with a one-line change.
 PRO = "gemini-3.1-pro-preview"
-FLASH = "gemini-3.5-flash"
-FLASH_LITE = "gemini-3.1-flash-lite"
+FLASH = "gemini-3.6-flash"
+FLASH_LITE = "gemini-3.5-flash-lite"
 DEFAULT = FLASH
 
 console = Console()
