@@ -90,7 +90,7 @@ from anthropic import AnthropicVertex
 
 # Latest model per tier -- use only the latest Opus/Sonnet/Haiku. DEFAULT aliases one of these so
 # non-model-specific demos switch their default with a one-line change.
-OPUS = "claude-opus-4-8"
+OPUS = "claude-opus-5"
 SONNET = "claude-sonnet-5"
 HAIKU = "claude-haiku-4-5"
 DEFAULT = SONNET
