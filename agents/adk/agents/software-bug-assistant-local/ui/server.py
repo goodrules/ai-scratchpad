@@ -4,7 +4,6 @@ Uses get_fast_api_app() from google.adk.cli.fast_api to expose ADK endpoints
 including /run_sse for SSE streaming, session CRUD, and /list-apps.
 """
 
-import os
 from pathlib import Path
 
 from fastapi import FastAPI

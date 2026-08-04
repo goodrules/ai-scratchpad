@@ -1,7 +1,6 @@
 import os
 import asyncio
 import vertexai
-import pprint
 from pathlib import Path
 from dotenv import load_dotenv
 from google.adk.agents import LlmAgent

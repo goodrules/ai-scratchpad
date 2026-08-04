@@ -32,7 +32,6 @@ import googlemaps
 import pandas as pd
 import requests
 import vertexai
-from functools import cached_property
 from dotenv import load_dotenv
 from google.adk.agents import Agent
 from google.adk.models import Gemini

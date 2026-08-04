@@ -1,10 +1,4 @@
 from google.adk import Agent, Context
-from google.adk.tools import FunctionTool
-
-# This is the function that the RefinerAgent will call to exit the loop.
-#def exit_loop():
-#    """Call this function ONLY when the critique is 'APPROVED', indicating the story is finished and no more changes are needed."""
-#    return {"status": "approved", "message": "Story approved. Exiting refinement loop."}
 
 # --- Tool Definition ---
 def exit_loop(tool_context: Context):
