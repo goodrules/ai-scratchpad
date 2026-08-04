@@ -5,6 +5,7 @@ from __future__ import annotations
 from _common import (
     FLASH,
     FLASH_LITE,
+    GEMMA,
     PRO,
     get_client,
     labeled_config,
@@ -14,7 +15,7 @@ from _common import (
 )
 
 PROMPT = "In 2 sentences, explain why the sky is blue."
-MODELS = [PRO, FLASH, FLASH_LITE]
+MODELS = [PRO, FLASH, FLASH_LITE, GEMMA]
 
 
 def run() -> None:

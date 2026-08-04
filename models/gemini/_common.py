@@ -110,6 +110,7 @@ from google import genai
 PRO = "gemini-3.1-pro-preview"
 FLASH = "gemini-3.6-flash"
 FLASH_LITE = "gemini-3.5-flash-lite"
+GEMMA = "gemma-4-26b-a4b-it-maas"
 DEFAULT = FLASH
 
 console = Console()
@@ -248,7 +249,7 @@ def _configure_logging(project: str, location: str) -> None:
     if not bq_destination:
         return
 
-    models = [PRO, FLASH, FLASH_LITE]
+    models = [PRO, FLASH, FLASH_LITE, GEMMA]
     cache_file = Path(__file__).parent / ".logging_configured"
     expected_content = f"{project}:{location}:{bq_destination}:{','.join(models)}"
     if cache_file.exists():
