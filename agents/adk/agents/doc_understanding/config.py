@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Model ID for document understanding
-# The user's existing code used gemini-3.5-flash.
-# gemini-3.5-flash is also a good option.
-MODEL_ID = os.environ.get("MODEL_ID", "gemini-3.5-flash")
+# The user's existing code used gemini-3.7-flash.
+# gemini-3.7-flash is also a good option.
+MODEL_ID = os.environ.get("MODEL_ID", "gemini-3.7-flash")
 
 # You can specify other model IDs or configurations here.
 # For example:

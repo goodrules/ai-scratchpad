@@ -1,4 +1,4 @@
-"""gemini-3.6-flash + code execution. Surfaces executed code and its result."""
+"""gemini-3.7-flash + code execution. Surfaces executed code and its result."""
 
 from __future__ import annotations
 

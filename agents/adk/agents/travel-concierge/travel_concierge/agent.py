@@ -34,7 +34,7 @@ _ = instrument_adk_with_arize()
 
 with using_session(session_id=uuid.uuid4()):
     root_agent = Agent(
-        model="gemini-3.5-flash",
+        model="gemini-3.7-flash",
         name="root_agent",
         description="A Travel Conceirge using the services of multiple sub-agents",
         instruction=prompt.ROOT_AGENT_INSTR,

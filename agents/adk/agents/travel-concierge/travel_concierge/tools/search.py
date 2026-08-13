@@ -19,7 +19,7 @@ from google.adk.tools.agent_tool import AgentTool
 from google.adk.tools.google_search_tool import google_search
 
 _search_agent = Agent(
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     name="google_search_grounding",
     description="An agent providing Google-search grounding capability",
     instruction=""",

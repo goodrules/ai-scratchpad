@@ -108,7 +108,7 @@ from google import genai
 # Latest model per tier (prefer GA over preview). DEFAULT aliases one of these so demos can
 # switch their default with a one-line change.
 PRO = "gemini-3.1-pro-preview"
-FLASH = "gemini-3.6-flash"
+FLASH = "gemini-3.7-flash"
 FLASH_LITE = "gemini-3.5-flash-lite"
 GEMMA = "gemma-4-26b-a4b-it-maas"
 DEFAULT = FLASH

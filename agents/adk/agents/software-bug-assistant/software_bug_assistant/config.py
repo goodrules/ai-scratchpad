@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # --- Model IDs ---
-DEFAULT_MODEL = "gemini-3.5-flash" # gemini-3.5-flash
+DEFAULT_MODEL = "gemini-3.7-flash" # gemini-3.7-flash
 ANALYSIS_AGENT_MODEL = DEFAULT_MODEL
 SEARCH_AGENT_MODEL = DEFAULT_MODEL
 

@@ -228,7 +228,7 @@ async def generate_html_report(report_data: str, tool_context: ToolContext) -> d
 
 #### generate_infographic
 
-Creates visual infographics using Gemini 3 Pro Image Preview (`gemini-3.5-flash`).
+Creates visual infographics using Gemini 3 Pro Image Preview (`gemini-3.7-flash`).
 
 ```python
 async def generate_infographic(data_summary: str, tool_context: ToolContext) -> dict:
@@ -307,22 +307,22 @@ Edit `config.py` to switch between model options:
 #       may throw "model overloaded" (503) errors during high-demand periods.
 
 # Option 1: Gemini 2.5 Pro (RECOMMENDED - stable, good for production)
-FAST_MODEL = "gemini-3.5-flash"
-PRO_MODEL = "gemini-3.5-flash"
-CODE_EXEC_MODEL = "gemini-3.5-flash"
-IMAGE_MODEL = "gemini-3.5-flash"  # Gemini 3 for native image generation
+FAST_MODEL = "gemini-3.7-flash"
+PRO_MODEL = "gemini-3.7-flash"
+CODE_EXEC_MODEL = "gemini-3.7-flash"
+IMAGE_MODEL = "gemini-3.7-flash"  # Gemini 3 for native image generation
 
 # Option 2: Gemini 3 Pro Preview (latest features, may have availability issues)
 # FAST_MODEL = "gemini-3.1-pro-preview"
 # PRO_MODEL = "gemini-3.1-pro-preview"
 # CODE_EXEC_MODEL = "gemini-3.1-pro-preview"
-# IMAGE_MODEL = "gemini-3.5-flash"
+# IMAGE_MODEL = "gemini-3.7-flash"
 
 # Option 3: Gemini 2.5 Flash (fastest, lowest cost)
-# FAST_MODEL = "gemini-2.5-flash"
-# PRO_MODEL = "gemini-2.5-flash"
-# CODE_EXEC_MODEL = "gemini-2.5-flash"
-# IMAGE_MODEL = "gemini-2.0-flash-exp"
+# FAST_MODEL = "gemini-3.7-flash"
+# PRO_MODEL = "gemini-3.7-flash"
+# CODE_EXEC_MODEL = "gemini-3.7-flash"
+# IMAGE_MODEL = "gemini-3.7-flash"
 ```
 
 ### Retry Configuration
@@ -406,8 +406,8 @@ If you encounter `503 UNAVAILABLE - model overloaded` errors:
 
 1. Switch to a more stable model in `config.py`:
    ```python
-   FAST_MODEL = "gemini-3.5-flash"
-   PRO_MODEL = "gemini-3.5-flash"
+   FAST_MODEL = "gemini-3.7-flash"
+   PRO_MODEL = "gemini-3.7-flash"
    ```
 2. Increase retry attempts and delays
 3. Wait a few minutes and try again

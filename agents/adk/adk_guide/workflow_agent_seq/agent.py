@@ -5,7 +5,7 @@ from google.adk.tools import google_search
 # Step 1: Researcher (Uses Tools)
 researcher = Agent(
     name="researcher",
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     instruction="Find 3 recent breakthroughs in the user provided topic using Google Search.",
     tools=[google_search]
 )
@@ -13,7 +13,7 @@ researcher = Agent(
 # Step 2: Writer (Pure Reasoning)
 writer = Agent(
     name="writer",
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     instruction="Summarize the provided research into a generic blog post format."
 )
 

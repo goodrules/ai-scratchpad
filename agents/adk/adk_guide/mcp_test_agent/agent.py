@@ -22,7 +22,7 @@ fs_mcp_toolset = McpToolset(
 # 3. Create the Agent
 root_agent = Agent(
     name="fs_agent",
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     instruction="""
     You are a file system assistant.
     You can read/write files in the workspace.

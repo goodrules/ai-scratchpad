@@ -56,7 +56,7 @@ arize_client = ArizeDatasetsClient(api_key=ARIZE_API_KEY)
 
 # Initialize Phoenix model for evaluations
 phoenix_model = GeminiModel(
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     project=GOOGLE_CLOUD_PROJECT,
     location="us-central1",
 )

@@ -1,4 +1,4 @@
-"""gemini-3.6-flash + Google Maps grounding (lat/lng resolved via structured output)."""
+"""gemini-3.7-flash + Google Maps grounding (lat/lng resolved via structured output)."""
 
 from __future__ import annotations
 

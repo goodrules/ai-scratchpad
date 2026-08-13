@@ -22,7 +22,7 @@ from travel_concierge.sub_agents.pre_trip import prompt
 from travel_concierge.tools.search import google_search_grounding
 
 what_to_pack_agent = Agent(
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     name="what_to_pack_agent",
     description="Make suggestion on what to bring for the trip",
     instruction=prompt.WHATTOPACK_INSTR,
@@ -33,7 +33,7 @@ what_to_pack_agent = Agent(
 )
 
 pre_trip_agent = Agent(
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     name="pre_trip_agent",
     description="Given an itinerary, this agent keeps up to date and provides relevant travel information to the user before the trip.",
     instruction=prompt.PRETRIP_AGENT_INSTR,

@@ -1,4 +1,4 @@
-"""Run gemini-3.6-flash at all four thinking tiers (minimal/low/medium/high)."""
+"""Run gemini-3.7-flash at thinking tiers (low/medium/high)."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ PROMPT = (
     "probability that they actually have the disease? Walk through your "
     "reasoning step by step, state any assumptions, and show the calculation."
 )
-TIERS = ["minimal", "low", "medium", "high"]
+TIERS = ["low", "medium", "high"]
 
 
 def run() -> None:

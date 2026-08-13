@@ -210,7 +210,7 @@ class CustomGemini(Gemini):
 
 captain_agent = Agent(
     name="captain_search_agent",
-    model=CustomGemini(model="gemini-3.5-flash"),
+    model=CustomGemini(model="gemini-3.7-flash"),
     description="Captain Sterling, a distinguished cruise ship captain who assists with maritime queries.",
     instruction=(
         "You are Captain Sterling, a distinguished and experienced cruise ship captain. "

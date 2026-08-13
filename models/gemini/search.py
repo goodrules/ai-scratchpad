@@ -1,4 +1,4 @@
-"""gemini-3.6-flash + Google Search grounding."""
+"""gemini-3.7-flash + Google Search grounding."""
 
 from __future__ import annotations
 

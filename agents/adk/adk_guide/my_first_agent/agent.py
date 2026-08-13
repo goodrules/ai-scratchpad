@@ -35,7 +35,7 @@ def convert_temperature(value: float, from_scale: str, to_scale: str) -> float:
 # 2. Register it
 root_agent = Agent(
     name="utility_agent",
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     instruction="You are a utility assistant. Use 'convert_temperature' to answer queries. Understand that 'F' and 'Fahrenheit', 'C' and 'Celsius', 'K' and 'Kelvin' are interchangeable.",
     tools=[convert_temperature]
     # Note: 'description' parameter is primarily used for multi-agent routing

@@ -210,7 +210,7 @@ This agent supports multiple Gemini model families. Edit `app/config.py` to swit
 |--------------|-------------|-------------|-------|
 | **Option 1: Gemini 2.5 Pro** | `gemini-2.5-pro` | `gemini-3-pro-image-preview` | **Recommended** - Stable, production-ready |
 | **Option 2: Gemini 3.1 Pro Preview** | `gemini-3.1-pro-preview` | `gemini-3-pro-image-preview` | Latest features - may throw 503 "model overloaded" errors |
-| **Option 3: Gemini 3 Flash Preview** | `gemini-3.5-flash` | `gemini-3.5-flash` | Fastest, lowest cost |
+| **Option 3: Gemini 3 Flash Preview** | `gemini-3.7-flash` | `gemini-3.7-flash` | Fastest, lowest cost |
 
 **Gemini 3 Documentation:**
 - [Vertex AI - Get started with Gemini 3](https://cloud.google.com/vertex-ai/generative-ai/docs/start/get-started-with-gemini-3)
@@ -227,10 +227,10 @@ To switch models, uncomment the desired option in `app/config.py`:
 # ...
 
 # Option 2: Gemini 3.1 Pro Preview (latest features, may have availability issues)
-FAST_MODEL = "gemini-3.5-flash"
-PRO_MODEL = "gemini-3.5-flash"
-CODE_EXEC_MODEL = "gemini-3.5-flash"
-IMAGE_MODEL = "gemini-3.5-flash"
+FAST_MODEL = "gemini-3.7-flash"
+PRO_MODEL = "gemini-3.7-flash"
+CODE_EXEC_MODEL = "gemini-3.7-flash"
+IMAGE_MODEL = "gemini-3.7-flash"
 ```
 
 > **Note:** If you encounter `503 UNAVAILABLE - model overloaded` errors, switch to Gemini 2.5 Pro for better reliability.

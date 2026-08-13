@@ -70,10 +70,10 @@ MAPS_API_KEY = os.environ.get("MAPS_API_KEY", "")
 #       may throw "model overloaded" (503) errors during high-demand periods.
 # ============================================================================
 
-FAST_MODEL = "gemini-3.6-flash"
-PRO_MODEL = "gemini-3.6-flash"
-CODE_EXEC_MODEL = "gemini-3.6-flash"
-IMAGE_MODEL = "gemini-3.6-flash"
+FAST_MODEL = "gemini-3.7-flash"
+PRO_MODEL = "gemini-3.7-flash"
+CODE_EXEC_MODEL = "gemini-3.7-flash"
+IMAGE_MODEL = "gemini-3.7-flash"
 
 # Retry Configuration (for handling model overload errors)
 # Note: HttpRetryOptions may only retry on certain HTTP codes (429, etc.)

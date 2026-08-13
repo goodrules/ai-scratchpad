@@ -20,7 +20,7 @@ from google.adk.tools.agent_tool import AgentTool
 from travel_concierge.sub_agents.booking import prompt
 
 create_reservation = Agent(
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     name="create_reservation",
     description="""Create a reservation for the selected item.""",
     instruction=prompt.CONFIRM_RESERVATION_INSTR,
@@ -28,14 +28,14 @@ create_reservation = Agent(
 
 
 payment_choice = Agent(
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     name="payment_choice",
     description="""Show the users available payment choices.""",
     instruction=prompt.PAYMENT_CHOICE_INSTR,
 )
 
 process_payment = Agent(
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     name="process_payment",
     description="""Given a selected payment choice, processes the payment, completing the transaction.""",
     instruction=prompt.PROCESS_PAYMENT_INSTR,
@@ -43,7 +43,7 @@ process_payment = Agent(
 
 
 booking_agent = Agent(
-    model="gemini-3.5-flash",
+    model="gemini-3.7-flash",
     name="booking_agent",
     description="Given an itinerary, complete the bookings of items by handling payment choices and processing.",
     instruction=prompt.BOOKING_AGENT_INSTR,
