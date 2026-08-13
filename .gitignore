@@ -196,3 +196,4 @@ CLAUDE.md
 *.db-journal
 *.sqlite
 *.sqlite-journal
+worklog/
