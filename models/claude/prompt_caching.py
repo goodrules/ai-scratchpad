@@ -6,7 +6,7 @@ from _common import DEFAULT, default_metadata, get_client, print_header, print_r
 
 # A realistic support-policy "document" used as a large, stable system prefix. The two facts the
 # questions below probe (the refund window and the enterprise-support contact) live up top; the rest
-# is padding so the prefix comfortably clears Sonnet 4.6's ~2048-token minimum cacheable size.
+# is padding so the prefix comfortably clears Sonnet 5's ~2048-token minimum cacheable size.
 _POLICY = """\
 Acme Cloud — Customer Support Policy (v3).
 

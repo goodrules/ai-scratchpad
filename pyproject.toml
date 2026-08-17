@@ -5,8 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13,<3.14"
 dependencies = [
-    "anthropic[vertex]>=0.40",
-    "anthropic>=0.101.0",
+    "anthropic[vertex]>=0.101.0",
     "google-cloud-aiplatform>=1.152.0",
     "google-genai>=1.75.0",
     "opentelemetry-api",

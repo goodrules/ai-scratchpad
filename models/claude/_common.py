@@ -241,25 +241,13 @@ def print_response(label: str, response) -> None:
 
 def print_citations(response) -> None:
     """Print any web-search source URLs referenced in the response, deduped."""
-    sources: list[tuple[str, str]] = []
-    seen: set[str] = set()
-    for block in getattr(response, "content", None) or []:
-        if getattr(block, "type", None) != "web_search_tool_result":
-            continue
-        content = getattr(block, "content", None)
-        # On success `content` is a list of web_search_result; on error it's a single error object.
-        if not isinstance(content, list):
-            continue
-        for result in content:
-            url = getattr(result, "url", "") or ""
-            title = getattr(result, "title", "") or ""
-            if url and url not in seen:
-                seen.add(url)
-                sources.append((title, url))
+    blocks = [b.content for b in getattr(response, "content", None) or []
+              if getattr(b, "type", None) == "web_search_tool_result" and isinstance(getattr(b, "content", None), list)]
+    sources = {getattr(r, "url", ""): getattr(r, "title", "") for chunk in blocks for r in chunk if getattr(r, "url", "")}
     if not sources:
         return
     console.print("[bold]Sources[/bold]")
-    for title, url in sources:
+    for url, title in sources.items():
         line = Text("  • ")
         if title:
             line.append(title)
@@ -270,18 +258,8 @@ def print_citations(response) -> None:
 def _render_usage(usage) -> None:
     if not usage:
         return
-    parts = [
-        ("input", getattr(usage, "input_tokens", None)),
-        ("output", getattr(usage, "output_tokens", None)),
-    ]
-    # Cache fields are usually 0; only surface them when non-zero (the prompt_caching demo relies
-    # on this to show the cache write on call 1 and the cache read on call 2).
-    cache_write = getattr(usage, "cache_creation_input_tokens", None)
-    cache_read = getattr(usage, "cache_read_input_tokens", None)
-    if cache_write:
-        parts.append(("cache_write", cache_write))
-    if cache_read:
-        parts.append(("cache_read", cache_read))
-    rendered = "  ".join(f"{k}={v}" for k, v in parts if v is not None)
-    if rendered:
-        console.print(f"[dim]tokens  {rendered}[/dim]")
+    attrs = [("input", "input_tokens"), ("output", "output_tokens"),
+             ("cache_write", "cache_creation_input_tokens"), ("cache_read", "cache_read_input_tokens")]
+    parts = [f"{k}={v}" for k, attr in attrs if (v := getattr(usage, attr, None))]
+    if parts:
+        console.print(f"[dim]tokens  {'  '.join(parts)}[/dim]")

@@ -1,4 +1,4 @@
-"""Run the same prompt across all Gemini 3/3.5 models."""
+"""Run the same prompt across all Gemini 3/3.5/3.7 models."""
 
 from __future__ import annotations
 

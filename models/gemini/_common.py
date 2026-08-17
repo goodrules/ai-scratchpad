@@ -409,12 +409,8 @@ def _enum_name(value, default: str = "UNKNOWN") -> str:
 def _render_usage(usage) -> None:
     if not usage:
         return
-    parts = [
-        ("prompt", getattr(usage, "prompt_token_count", None)),
-        ("thoughts", getattr(usage, "thoughts_token_count", None)),
-        ("output", getattr(usage, "candidates_token_count", None)),
-        ("total", getattr(usage, "total_token_count", None)),
-    ]
-    rendered = "  ".join(f"{k}={v}" for k, v in parts if v is not None)
-    if rendered:
-        console.print(f"[dim]tokens  {rendered}[/dim]")
+    attrs = [("prompt", "prompt_token_count"), ("thoughts", "thoughts_token_count"),
+             ("output", "candidates_token_count"), ("total", "total_token_count")]
+    parts = [f"{k}={v}" for k, attr in attrs if (v := getattr(usage, attr, None)) is not None]
+    if parts:
+        console.print(f"[dim]tokens  {'  '.join(parts)}[/dim]")

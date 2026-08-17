@@ -1,4 +1,4 @@
-"""Run claude-sonnet-4-6 with adaptive thinking at three effort levels (low/medium/high)."""
+"""Run claude-sonnet-5 with adaptive thinking at three effort levels (low/medium/high)."""
 
 from __future__ import annotations
 

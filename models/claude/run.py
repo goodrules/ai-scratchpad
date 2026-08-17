@@ -36,19 +36,11 @@ GROUPS = {
 
 def resolve(names: list[str]) -> list[str]:
     """Expand group names to demo names, validate, and dedupe while preserving order."""
-    resolved: list[str] = []
-    for name in names:
-        if name in GROUPS:
-            for demo in GROUPS[name]:
-                if demo not in resolved:
-                    resolved.append(demo)
-        elif name in DEMOS:
-            if name not in resolved:
-                resolved.append(name)
-        else:
-            valid = sorted(set(DEMOS) | set(GROUPS))
-            raise SystemExit(f"unknown demo or group: {name!r}. valid: {valid}")
-    return resolved
+    invalid = [n for n in names if n not in DEMOS and n not in GROUPS]
+    if invalid:
+        valid = sorted(set(DEMOS) | set(GROUPS))
+        raise SystemExit(f"unknown demo or group: {invalid[0]!r}. valid: {valid}")
+    return list(dict.fromkeys(d for name in names for d in GROUPS.get(name, [name])))
 
 
 def main() -> None:

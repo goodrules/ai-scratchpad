@@ -3,7 +3,7 @@ from google.adk.models import Claude
 
 editor_agent = Agent(
     name="EditorAgent",
-    model=Claude(model="claude-opus-4-8"),
+    model=Claude(model="claude-opus-5"),
     instruction="""You are an experienced story editor with a keen eye for craft. Review the story provided below with balanced attention to all storytelling elements.
 
     Story: {current_story}

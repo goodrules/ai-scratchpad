@@ -1,13 +1,14 @@
-import os
+from pathlib import Path
+
 from google.adk import Agent
 from google.adk.tools.mcp_tool import McpToolset
 from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
 from mcp import StdioServerParameters
 
 # 1. Setup a safe workspace directory
-allowed_dir = os.path.abspath("./workspace")
-if not os.path.exists(allowed_dir):
-    os.makedirs(allowed_dir)
+workspace_path = Path("./workspace").resolve()
+workspace_path.mkdir(parents=True, exist_ok=True)
+allowed_dir = str(workspace_path)
 
 # 2. Configure the MCP Toolset (Runs the server via npx)
 fs_mcp_toolset = McpToolset(

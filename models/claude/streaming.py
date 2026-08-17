@@ -1,4 +1,4 @@
-"""Stream a long response from claude-sonnet-4-6 token-by-token, then read final usage."""
+"""Stream a long response from claude-sonnet-5 token-by-token, then read final usage."""
 
 from __future__ import annotations
 

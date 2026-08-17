@@ -6,7 +6,7 @@ authenticates with GCP ADC (`gcloud auth application-default login`); no provide
 
 | Cookbook | Provider / SDK | Deep-dive |
 | --- | --- | --- |
-| [`gemini/`](gemini/README.md) | Google Gemini 3/3.5 via `google-genai` | Observability (Cloud Trace, BigQuery request/response logging, label-based per-caller attribution) + token-usage SQL in `gemini/sql/`. |
+| [`gemini/`](gemini/README.md) | Google Gemini 3/3.5/3.7 via `google-genai` | Observability (Cloud Trace, BigQuery request/response logging, label-based per-caller attribution) + token-usage SQL in `gemini/sql/`. |
 | [`claude/`](claude/README.md) | Anthropic Claude via `anthropic[vertex]` | Cloud Trace + console observability; per-caller attribution via the Anthropic-native `metadata.user_id` field (no BigQuery/labels — see that README for why). |
 
 ## Quick start

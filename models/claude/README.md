@@ -5,8 +5,8 @@ Small, self-contained demos of Anthropic Claude features on **Vertex AI** (via t
 Each demo is one capability; the interesting part is one or two lines on `client.messages.*`, and the
 rest is shared plumbing in `_common.py`.
 
-Models are the latest of each tier only — `claude-opus-5`, `claude-sonnet-4-6`, `claude-haiku-4-5`
-— and non-model-specific demos default to **Sonnet** (`claude-sonnet-4-6`).
+Models are the latest of each tier only — `claude-opus-5`, `claude-sonnet-5`, `claude-haiku-4-5`
+— and non-model-specific demos default to **Sonnet** (`claude-sonnet-5`).
 
 ## What's here
 

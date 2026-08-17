@@ -311,13 +311,9 @@ async def agent_runnable_async(prompt: str) -> dict:
 
 def agent_runnable(prompt: str) -> dict:
     """Sync wrapper for the async agent runnable."""
-    loop = asyncio.new_event_loop()
-    try:
-        res = loop.run_until_complete(agent_runnable_async(prompt))
-        res["predicted_trajectory"] = json.dumps(res["predicted_trajectory"])
-        return res
-    finally:
-        loop.close()
+    res = asyncio.run(agent_runnable_async(prompt))
+    res["predicted_trajectory"] = json.dumps(res["predicted_trajectory"])
+    return res
 
 
 # --- Evaluation Dataset ---
