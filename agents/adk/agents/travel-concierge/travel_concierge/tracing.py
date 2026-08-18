@@ -1,30 +1,54 @@
+"""Native Google Cloud Trace & OpenTelemetry tracing setup for Travel Concierge."""
+
+from __future__ import annotations
+
 import os
-import warnings
-
-from arize.otel import register
+from pathlib import Path
 from dotenv import load_dotenv
-from openinference.instrumentation.google_adk import GoogleADKInstrumentor
 from opentelemetry import trace
+from opentelemetry.propagate import set_global_textmap
+from opentelemetry.propagators.cloud_trace_propagator import CloudTraceFormatPropagator
+from opentelemetry.propagators.composite import CompositePropagator
+from opentelemetry.sdk.resources import Resource
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapPropagator
 
-load_dotenv()
+load_dotenv(Path(__file__).parents[1] / ".env")
 
 
-def instrument_adk_with_arize() -> trace.Tracer:
-    """Instrument the ADK with Arize."""
+def setup_telemetry() -> trace.Tracer:
+    """Initialize native GCP Cloud Trace OpenTelemetry provider with fallback."""
+    project = os.getenv("GOOGLE_CLOUD_PROJECT")
+    if not project:
+        try:
+            import google.auth
 
-    if os.getenv("ARIZE_SPACE_ID") is None:
-        warnings.warn("ARIZE_SPACE_ID is not set", stacklevel=2)
-        return None
-    if os.getenv("ARIZE_API_KEY") is None:
-        warnings.warn("ARIZE_API_KEY is not set", stacklevel=2)
-        return None
+            _, project = google.auth.default()
+        except Exception:
+            project = None
 
-    tracer_provider = register(
-        space_id=os.getenv("ARIZE_SPACE_ID"),
-        api_key=os.getenv("ARIZE_API_KEY"),
-        project_name=os.getenv("ARIZE_PROJECT_NAME", "adk-travel-concierge"),
+    provider = TracerProvider(
+        resource=Resource.create({"service.name": "travel-concierge-agent"})
+    )
+    trace.set_tracer_provider(provider)
+
+    set_global_textmap(
+        CompositePropagator([
+            TraceContextTextMapPropagator(),
+            CloudTraceFormatPropagator(),
+        ])
     )
 
-    GoogleADKInstrumentor().instrument(tracer_provider=tracer_provider)
+    try:
+        from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
 
-    return tracer_provider.get_tracer(__name__)
+        if project:
+            provider.add_span_processor(
+                BatchSpanProcessor(CloudTraceSpanExporter(project_id=project))
+            )
+    except Exception:
+        pass
+
+    return trace.get_tracer("travel-concierge-agent")
+

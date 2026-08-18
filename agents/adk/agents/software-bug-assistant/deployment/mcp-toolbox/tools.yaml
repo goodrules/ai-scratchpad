@@ -1,5 +1,5 @@
 sources:
-  postgresql: # GCP -  CLOUD SQL
+  postgresql: # GCP - CLOUD SQL (default in production) or LOCAL Postgres
     kind: cloud-sql-postgres
     project: ${PROJECT_ID}
     region: us-central1
@@ -7,13 +7,14 @@ sources:
     database: tickets-db
     user: ${DB_USER}
     password: ${DB_PASS}
-  #postgresql: # LOCAL
-  #  kind: postgres
-  #  host: 127.0.0.1
-  #  port: 5432
-  #  database: ticketsdb
-  #  user: postgres
-  #  password: admin
+  # For local testing via docker-compose up -d:
+  # postgresql:
+  #   kind: postgres
+  #   host: ${DB_HOST:-127.0.0.1}
+  #   port: ${DB_PORT:-5432}
+  #   database: ${DB_NAME:-ticketsdb}
+  #   user: ${DB_USER:-postgres}
+  #   password: ${DB_PASSWORD:-admin}
 tools:
   search-tickets:
     kind: postgres-sql

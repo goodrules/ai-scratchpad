@@ -203,15 +203,16 @@ def default_metadata() -> dict[str, str]:
 
 def get_client() -> AnthropicVertex:
     project = os.environ.get("GOOGLE_CLOUD_PROJECT")
-    location = os.environ.get("GOOGLE_CLOUD_LOCATION")
-    if not project or not location:
+    location = os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
+    if not project:
         raise RuntimeError(
-            "GOOGLE_CLOUD_PROJECT or GOOGLE_CLOUD_LOCATION is not set. "
-            "Update models/claude/.env with your project ID and location (region)."
+            "GOOGLE_CLOUD_PROJECT is not set. "
+            "Update models/claude/.env with your project ID."
         )
     # Auth is GCP ADC (gcloud auth application-default login); no Anthropic API key. `region` may be
     # "global" (recommended), a multi-region ("us"/"eu"), or a specific region.
-    return AnthropicVertex(project_id=project, region=location)
+    # Native client retry logic handles rate limits (429) and transient 5xx errors.
+    return AnthropicVertex(project_id=project, region=location, max_retries=5)
 
 
 # --- Output helpers ----------------------------------------------------------------------------

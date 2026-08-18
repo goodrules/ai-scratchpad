@@ -51,36 +51,48 @@ USE_VERTEX_AI = (
 if USE_VERTEX_AI:
     GOOGLE_CLOUD_PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "")
     GOOGLE_CLOUD_LOCATION = os.environ.get(
-        "GOOGLE_CLOUD_LOCATION", "us-central1"
+        "GOOGLE_CLOUD_LOCATION", "global"
     )
     GOOGLE_API_KEY = ""  # Not used in Vertex AI mode
 else:
     # AI Studio Configuration (for local development)
     GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY", "")
     GOOGLE_CLOUD_PROJECT = ""
-    GOOGLE_CLOUD_LOCATION = ""
+    GOOGLE_CLOUD_LOCATION = "global"
 
 # Maps API Key (required for both modes)
 MAPS_API_KEY = os.environ.get("MAPS_API_KEY", "")
-
 # Model Configuration
 # ============================================================================
-# Uncomment the model set you want to use. Only one set should be active.
-# NOTE: Gemini 2.5 Pro is RECOMMENDED for stability. Gemini 3 Pro Preview
-#       may throw "model overloaded" (503) errors during high-demand periods.
+# Default models standardizing on gemini-3.7-flash
 # ============================================================================
 
 FAST_MODEL = "gemini-3.7-flash"
 PRO_MODEL = "gemini-3.7-flash"
 CODE_EXEC_MODEL = "gemini-3.7-flash"
-IMAGE_MODEL = "gemini-3.7-flash"
+IMAGE_MODEL = "gemini-3.1-flash-image"
 
-# Retry Configuration (for handling model overload errors)
-# Note: HttpRetryOptions may only retry on certain HTTP codes (429, etc.)
-# For persistent 503 errors, consider using a different model or waiting for API availability
-RETRY_INITIAL_DELAY = 5  # seconds - longer wait for overloaded models
-RETRY_ATTEMPTS = 5  # More attempts for transient errors
-RETRY_MAX_DELAY = 60  # seconds
+# Retry Configuration (native HttpRetryOptions for 429 and transient errors)
+RETRY_INITIAL_DELAY = 2  # seconds
+RETRY_ATTEMPTS = 5       # total attempts
+RETRY_MAX_DELAY = 60     # seconds cap
+
+
+def get_retry_http_options():
+    """Return standard HttpOptions configured with exponential backoff and jitter."""
+    from google.genai import types
+
+    return types.HttpOptions(
+        retry_options=types.HttpRetryOptions(
+            attempts=RETRY_ATTEMPTS,
+            initial_delay=float(RETRY_INITIAL_DELAY),
+            max_delay=float(RETRY_MAX_DELAY),
+            exp_base=2.0,
+            jitter=1.0,
+            http_status_codes=[408, 429, 500, 502, 503, 504],
+        )
+    )
+
 
 # App Configuration
 APP_NAME = "ai_location_strategy"

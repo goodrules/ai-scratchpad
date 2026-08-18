@@ -1,12 +1,20 @@
 from google.adk import Workflow, Context
 from google.adk.workflow import START, node
 
-from .subagents import (
-    editor_agent,
-    refiner_agent,
-    writer_agent,
-    planner_agent
-)
+try:
+    from .subagents import (
+        editor_agent,
+        refiner_agent,
+        writer_agent,
+        planner_agent
+    )
+except ImportError:
+    from subagents import (
+        editor_agent,
+        refiner_agent,
+        writer_agent,
+        planner_agent
+    )
 
 @node(rerun_on_resume=True)
 async def refiner_node(ctx: Context):

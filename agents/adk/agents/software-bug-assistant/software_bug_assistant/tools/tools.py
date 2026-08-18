@@ -30,11 +30,7 @@ from ..config import (
 )
 from google.adk.tools import google_search
 from google.adk.tools.agent_tool import AgentTool
-from google.adk.tools.langchain_tool import LangchainTool
 from google.adk.tools.mcp_tool import MCPToolset, StreamableHTTPConnectionParams
-from langchain_community.tools import StackExchangeTool
-from langchain_community.utilities import StackExchangeAPIWrapper
-from toolbox_core import ToolboxSyncClient
 
 # Load environment variables
 load_dotenv()
@@ -61,9 +57,15 @@ search_agent = Agent(
 search_tool = AgentTool(search_agent)
 
 # ----- Example of a Third Party Tool (LangChainTool) -----
-stack_exchange_tool = StackExchangeTool(api_wrapper=StackExchangeAPIWrapper())
-# Convert LangChain tool to ADK tool using LangchainTool
-langchain_tool = LangchainTool(stack_exchange_tool)
+try:
+    from google.adk.tools.langchain_tool import LangchainTool
+    from langchain_community.tools import StackExchangeTool
+    from langchain_community.utilities import StackExchangeAPIWrapper
+
+    stack_exchange_tool = StackExchangeTool(api_wrapper=StackExchangeAPIWrapper())
+    langchain_tool = LangchainTool(stack_exchange_tool)
+except Exception:
+    langchain_tool = None
 
 # ----- Example of a Google Cloud Tool (MCP Toolbox for Databases) -----
 TOOLBOX_URL = resolve_toolbox_url()
@@ -71,6 +73,8 @@ TOOLBOX_URL = resolve_toolbox_url()
 # Initialize Toolbox client and load tools
 # If the toolbox server is not available (e.g., in CI), set to empty list
 try:
+    from toolbox_core import ToolboxSyncClient
+
     toolbox = ToolboxSyncClient(TOOLBOX_URL)
     toolbox_tools = toolbox.load_toolset(TOOLBOX_TOOLSET_NAME)
 except Exception:

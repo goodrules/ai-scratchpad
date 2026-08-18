@@ -5,40 +5,58 @@ demos plus the observability wiring around them.
 
 ## Layout
 
-- `models/gemini/` — runnable demos of Gemini 3/3.5/3.7 features (models, thinking, search, maps, code
+- [`models/gemini/`](models/gemini/README.md) — runnable demos of Gemini 3/3.5/3.7 features (models, thinking, search, maps, code
   execution, URL context) plus shared client/observability setup in `_common.py`, and BigQuery
   token-usage SQL in `models/gemini/sql/`.
-- `models/claude/` — runnable demos of Anthropic Claude on Vertex AI (models, thinking, streaming,
+- [`models/claude/`](models/claude/README.md) — runnable demos of Anthropic Claude on Vertex AI (models, thinking, streaming,
   tool use, structured outputs, vision, web search, prompt caching, token counting) plus shared
   client/observability setup in `_common.py`.
-- `agents/` — placeholder (see [Agents](#agents)).
+- [`agents/`](agents/README.md) — autonomous agents, multi-agent workflows, and evaluation demos built on the **Google Agent Development Kit (ADK)** and **Vertex AI Agent Engine**.
 
-Each cookbook is self-contained: a `_common.py` hub, one tiny file per capability, and a `run.py`
+Each model cookbook is self-contained with a `_common.py` hub, one tiny file per capability, and a `run.py`
 meta-runner. See each subfolder's `README.md` for the deep dive.
 
 ## Setup
 
 ```bash
 uv sync                                   # install dependencies
-gcloud auth application-default login     # authenticate ADC (both cookbooks use ADC, no API keys)
+gcloud auth application-default login     # authenticate ADC (all cookbooks use ADC, no API keys)
 ```
 
-Then copy and fill the `.env` for whichever cookbook you're running:
+Then copy and fill the `.env` for whichever cookbook or agent you're running:
 
 ```bash
 cp models/gemini/.env.example models/gemini/.env     # Gemini
 cp models/claude/.env.example models/claude/.env     # Claude
 ```
 
-At minimum set `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION` in each `.env`.
+At minimum set `GOOGLE_CLOUD_PROJECT` and `GOOGLE_CLOUD_LOCATION="global"` (recommended for dynamic routing and quota resilience).
 
 ## Run the demos
+
+### 1. Model Capabilities
 
 ```bash
 uv run models/gemini/run.py all           # every Gemini demo
 uv run models/claude/run.py all           # every Claude demo
 uv run models/claude/run.py models        # a single named demo
 ```
+
+### 2. Autonomous Agents & Workflows (ADK)
+
+```bash
+# Run an ADK agent in the terminal
+uv run adk run agents/adk/agents/google_search_agent/app
+uv run adk run agents/adk/agents/short_story_agent
+
+# Run local agent evaluation (Vertex AI EvalTask)
+uv run python agents/demos/eval_sea_captain_local.py
+
+# Launch the visual ADK web UI
+cd agents/adk/agents && uv run adk web
+```
+
+See [`agents/README.md`](agents/README.md) for the full agent catalog, MCP tools, and deployment guides.
 
 ## Token usage (Gemini)
 
@@ -54,6 +72,7 @@ bq query --use_legacy_sql=false --project_id=<PROJECT_ID> < models/gemini/sql/us
 > `labels` field, so the Claude cookbook attributes usage via Anthropic's native `metadata.user_id`
 > instead. See `models/claude/README.md` for details.
 
-## Agents
+## References
 
-_Coming soon._
+Official documentation links for authentication, Google Gen AI SDK, Anthropic on Vertex AI, and ADK / Agent Engine are cataloged in [`REFERENCE.md`](REFERENCE.md).
+

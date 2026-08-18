@@ -50,8 +50,9 @@ Usage:
 from google.adk import Agent, Workflow
 from google.adk.workflow import START
 from google.adk.tools.agent_tool import AgentTool
+from google.genai import types
 
-from .config import APP_NAME, FAST_MODEL
+from .config import APP_NAME, FAST_MODEL, get_retry_http_options
 from .prompt_utils import make_instruction_provider
 from .sub_agents.competitor_mapping.agent import competitor_mapping_agent
 from .sub_agents.gap_analysis.agent import gap_analysis_agent
@@ -140,5 +141,8 @@ root_agent = Agent(
     description="A strategic partner for location strategy analysis, guiding users to optimal locations for their business or facility based on market data, competition, infrastructure, and risk factors.",
     instruction=make_instruction_provider(ROOT_INSTRUCTION_RETAIL, ROOT_INSTRUCTION_DATACENTER),
     tools=[AgentTool(intake_agent), location_strategy_pipeline],  # Part 0: Parse user request & Run analysis
+    generate_content_config=types.GenerateContentConfig(
+        http_options=get_retry_http_options()
+    ),
 )
 

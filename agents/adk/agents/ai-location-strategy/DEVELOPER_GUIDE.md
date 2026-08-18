@@ -306,23 +306,11 @@ Edit `config.py` to switch between model options:
 # NOTE: Gemini 2.5 Pro is RECOMMENDED for stability. Gemini 3 Pro Preview
 #       may throw "model overloaded" (503) errors during high-demand periods.
 
-# Option 1: Gemini 2.5 Pro (RECOMMENDED - stable, good for production)
+# Default Configuration
 FAST_MODEL = "gemini-3.7-flash"
 PRO_MODEL = "gemini-3.7-flash"
 CODE_EXEC_MODEL = "gemini-3.7-flash"
-IMAGE_MODEL = "gemini-3.7-flash"  # Gemini 3 for native image generation
-
-# Option 2: Gemini 3 Pro Preview (latest features, may have availability issues)
-# FAST_MODEL = "gemini-3.1-pro-preview"
-# PRO_MODEL = "gemini-3.1-pro-preview"
-# CODE_EXEC_MODEL = "gemini-3.1-pro-preview"
-# IMAGE_MODEL = "gemini-3.7-flash"
-
-# Option 3: Gemini 2.5 Flash (fastest, lowest cost)
-# FAST_MODEL = "gemini-3.7-flash"
-# PRO_MODEL = "gemini-3.7-flash"
-# CODE_EXEC_MODEL = "gemini-3.7-flash"
-# IMAGE_MODEL = "gemini-3.7-flash"
+IMAGE_MODEL = "gemini-3.1-flash-image"  # Dedicated image generation model
 ```
 
 ### Retry Configuration

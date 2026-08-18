@@ -12,10 +12,15 @@ requires-python = ">=3.10,<3.13"
 keywords = ["adk", "agents", "gemini", "retail", "location-strategy"]
 
 dependencies = [
-    "google-adk>=1.20.0",
+    "ag-ui-adk>=0.7.0",
+    "fastapi>=0.115.0",
+    "google-adk>=2.0.0",
+    "google-genai>=1.75.0",
     "googlemaps>=4.10.0",
     "pydantic>=2.10.0",
     "python-dotenv>=1.0.0",
+    "tenacity>=8.0.0",
+    "uvicorn>=0.32.0",
 ]
 
 [project.urls]

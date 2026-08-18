@@ -102,6 +102,7 @@ except Exception:
     pass
 
 from google import genai
+from google.genai import types
 
 
 
@@ -304,18 +305,28 @@ def _configure_logging(project: str, location: str) -> None:
 
 def get_client() -> genai.Client:
     project = os.environ.get("GOOGLE_CLOUD_PROJECT")
-    location = os.environ.get("GOOGLE_CLOUD_LOCATION")
-    if not project or not location:
+    location = os.environ.get("GOOGLE_CLOUD_LOCATION", "global")
+    if not project:
         raise RuntimeError(
-            "GOOGLE_CLOUD_PROJECT or GOOGLE_CLOUD_LOCATION is not set. "
-            "Update models/gemini/.env with your project ID and location."
+            "GOOGLE_CLOUD_PROJECT is not set. "
+            "Update models/gemini/.env with your project ID."
         )
     _configure_logging(project, location)
     return genai.Client(
         vertexai=True,
         project=project,
         location=location,
-        http_options={"client_args": {"verify": True}},
+        http_options=types.HttpOptions(
+            client_args={"verify": True},
+            retry_options=types.HttpRetryOptions(
+                attempts=5,
+                initial_delay=2.0,
+                max_delay=60.0,
+                exp_base=2.0,
+                jitter=1.0,
+                http_status_codes=[408, 429, 500, 502, 503, 504],
+            ),
+        ),
     )
 
 

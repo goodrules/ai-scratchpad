@@ -230,7 +230,7 @@ To switch models, uncomment the desired option in `app/config.py`:
 FAST_MODEL = "gemini-3.7-flash"
 PRO_MODEL = "gemini-3.7-flash"
 CODE_EXEC_MODEL = "gemini-3.7-flash"
-IMAGE_MODEL = "gemini-3.7-flash"
+IMAGE_MODEL = "gemini-3.1-flash-image"
 ```
 
 > **Note:** If you encounter `503 UNAVAILABLE - model overloaded` errors, switch to Gemini 2.5 Pro for better reliability.

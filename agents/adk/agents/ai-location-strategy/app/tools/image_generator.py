@@ -15,7 +15,7 @@
 """Gemini image generation tool for creating infographics.
 
 Uses Google AI Studio (API key) for authentication.
-Uses gemini-3.7-flash model for image generation.
+Uses gemini-3.1-flash-image model for image generation.
 Requires GOOGLE_API_KEY environment variable to be set.
 
 Saves the generated infographic directly as an artifact using tool_context.save_artifact()
@@ -28,7 +28,7 @@ import logging
 from google import genai
 from google.adk import Context
 from google.genai import types
-from google.genai.errors import ServerError
+from google.genai.errors import APIError, ClientError, ServerError
 from tenacity import (
     retry,
     retry_if_exception_type,
@@ -36,7 +36,13 @@ from tenacity import (
     wait_exponential,
 )
 
-from ..config import IMAGE_MODEL
+from ..config import (
+    GOOGLE_CLOUD_LOCATION,
+    GOOGLE_CLOUD_PROJECT,
+    IMAGE_MODEL,
+    USE_VERTEX_AI,
+    get_retry_http_options,
+)
 
 logger = logging.getLogger("LocationStrategyPipeline")
 
@@ -47,7 +53,7 @@ async def generate_infographic(
     """Generate an infographic image using Gemini's image generation capabilities.
 
     This tool creates a professional infographic visualizing the location
-    intelligence report data using gemini-3.7-flash model via AI Studio.
+    intelligence report data using gemini-3.1-flash-image model via AI Studio.
 
     The generated image is automatically saved as an artifact named "infographic.png"
     which can be viewed in the adk web UI.
@@ -68,9 +74,17 @@ async def generate_infographic(
             - error_message: Error details (if failed)
     """
     try:
-        # Initialize Gemini client using AI Studio (not Vertex AI)
-        # This uses GOOGLE_API_KEY from environment automatically
-        client = genai.Client()
+        # Initialize Gemini client supporting both Vertex AI and AI Studio with native retry options
+        http_options = get_retry_http_options()
+        if USE_VERTEX_AI and GOOGLE_CLOUD_PROJECT:
+            client = genai.Client(
+                vertexai=True,
+                project=GOOGLE_CLOUD_PROJECT,
+                location=GOOGLE_CLOUD_LOCATION or "global",
+                http_options=http_options,
+            )
+        else:
+            client = genai.Client(http_options=http_options)
 
         # Create the prompt for infographic generation
         prompt = f"""Generate a professional business infographic for a location intelligence report.
@@ -90,13 +104,13 @@ DESIGN REQUIREMENTS:
 Create an infographic that a business executive would use in a board presentation.
 """
 
-        # Retry wrapper for handling model overload errors
+        # Retry wrapper for handling transient 429 and 5xx errors
         num_attempts = 10
 
         @retry(
             stop=stop_after_attempt(num_attempts),
             wait=wait_exponential(multiplier=2, min=2, max=30),
-            retry=retry_if_exception_type(ServerError),
+            retry=retry_if_exception_type((ServerError, ClientError, APIError)),
             before_sleep=lambda retry_state: logger.warning(
                 f"Gemini API error, retrying in {retry_state.next_action.sleep} seconds... "
                 f"(attempt {retry_state.attempt_number}/{num_attempts})"
@@ -114,7 +128,7 @@ Create an infographic that a business executive would use in a board presentatio
                 ),
             )
 
-        # Generate the image using gemini-3.7-flash model
+        # Generate the image using gemini-3.1-flash-image model
         response = await generate_with_retry()
 
         # Check for successful generation

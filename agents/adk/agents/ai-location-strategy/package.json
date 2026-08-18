@@ -1,4 +1,10 @@
 {
+  "name": "ai-location-strategy",
+  "scripts": {
+    "dev": "npm --prefix app/frontend run dev",
+    "build": "npm --prefix app/frontend run build",
+    "start": "npm --prefix app/frontend run start"
+  },
   "dependencies": {
     "@copilotkit/react-core": "^1.51.3",
     "@copilotkit/react-textarea": "^1.51.3",

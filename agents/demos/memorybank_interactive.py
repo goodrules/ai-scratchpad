@@ -13,11 +13,12 @@ from google.genai import types
 load_dotenv(dotenv_path=Path(__file__).parent / ".env", override=True)
 
 APP_NAME = "ghost_ridge_intel_demo"
-GENAI_MODEL_ID = "gemini-2.5-pro"
+GENAI_MODEL_ID = "gemini-3.7-flash"
 PLAYER_ID = "detective_jax"
 
 GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
-GOOGLE_CLOUD_LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION")
+# Vertex AI Memory Bank requires a supported regional location (e.g. us-central1)
+GOOGLE_CLOUD_LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
 vertexai_client = vertexai.Client(project=GOOGLE_CLOUD_PROJECT, location=GOOGLE_CLOUD_LOCATION)
 
@@ -70,7 +71,19 @@ npc_agent = LlmAgent(
     - Every response MUST end with a short question.
     - If the user provides a secret (intel), acknowledge it mockingly and store it in your mind.
     """,
-    tools=[adk.tools.preload_memory]
+    tools=[adk.tools.preload_memory],
+    generate_content_config=types.GenerateContentConfig(
+        http_options=types.HttpOptions(
+            retry_options=types.HttpRetryOptions(
+                attempts=5,
+                initial_delay=2.0,
+                max_delay=60.0,
+                exp_base=2.0,
+                jitter=1.0,
+                http_status_codes=[408, 429, 500, 502, 503, 504],
+            )
+        )
+    ),
 )
 
 # Create Agent Runner

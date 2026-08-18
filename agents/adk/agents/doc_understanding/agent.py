@@ -5,8 +5,12 @@ from google.adk import Agent, Context
 from google.adk.tools import BaseTool
 from google.adk.models.llm_request import LlmRequest
 from google.genai import types
-from .config import MODEL_ID
-from .prompt import SYSTEM_INSTRUCTION
+try:
+    from .config import MODEL_ID
+    from .prompt import SYSTEM_INSTRUCTION
+except ImportError:
+    from config import MODEL_ID
+    from prompt import SYSTEM_INSTRUCTION
 from typing_extensions import override
 
 class LoadFileTool(BaseTool):

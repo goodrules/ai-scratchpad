@@ -12,7 +12,7 @@ Models are the latest of each tier only — Gemini Pro (`gemini-3.1-pro-preview`
 | File | What it demonstrates |
 | --- | --- |
 | `models.py` | Run one prompt across every Gemini 3/3.5/3.7 model. |
-| `thinking.py` | The four thinking tiers (`minimal`/`low`/`medium`/`high`) on one prompt. |
+| `thinking.py` | The three thinking tiers (`low`/`medium`/`high`) on one prompt. |
 | `search.py` | Google Search grounding (answers from live web results). |
 | `url_context.py` | URL Context tool (model fetches and reads URLs in the prompt). |
 | `maps.py` | Google Maps grounding, anchored at coordinates resolved via structured output. |

@@ -6,7 +6,7 @@ runs inference and evaluation using the client.evals API, prints
 results to the terminal, and cleans up the deployed agent.
 
 Usage:
-    uv run python demos/eval_sea_captain_ae_deploy.py --staging-bucket gs://your-bucket
+    uv run python agents/demos/eval_sea_captain_ae_deploy.py --staging-bucket gs://your-bucket
 """
 
 import argparse
@@ -45,6 +45,7 @@ google_search = GoogleSearchTool(bypass_multi_tools_limit=True)
 load_dotenv(dotenv_path=Path(__file__).parent / ".env", override=True)
 
 GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
+# Vertex AI Agent Engine and EvalTask require a supported regional location (e.g. us-central1)
 GOOGLE_CLOUD_LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 STAGING_BUCKET = os.getenv("STAGING_BUCKET")
 
@@ -201,10 +202,17 @@ class CustomGemini(Gemini):
         return Client(
             vertexai=True,
             project=GOOGLE_CLOUD_PROJECT,
-            location="us",
+            location=GOOGLE_CLOUD_LOCATION,
             http_options=genai_types.HttpOptions(
-                base_url="https://aiplatform.us.rep.googleapis.com",
-            )
+                retry_options=genai_types.HttpRetryOptions(
+                    attempts=5,
+                    initial_delay=2.0,
+                    max_delay=60.0,
+                    exp_base=2.0,
+                    jitter=1.0,
+                    http_status_codes=[408, 429, 500, 502, 503, 504],
+                ),
+            ),
         )
 
 captain_agent = Agent(

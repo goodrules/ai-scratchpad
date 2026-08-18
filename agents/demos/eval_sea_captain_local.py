@@ -6,8 +6,8 @@ weather, port lookup, unit conversion), runs it against an evaluation dataset
 using Vertex AI's EvalTask, and prints results to the terminal.
 
 Usage:
-    uv run python demos/eval_sea_captain.py
-    uv run python demos/eval_sea_captain.py --experiment-name my_experiment
+    uv run python agents/demos/eval_sea_captain_local.py
+    uv run python agents/demos/eval_sea_captain_local.py --experiment-name my_experiment
 """
 
 import argparse
@@ -47,6 +47,7 @@ from vertexai.preview.evaluation import EvalTask
 load_dotenv(dotenv_path=Path(__file__).parent / ".env", override=True)
 
 GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
+# Vertex AI EvalTask requires a supported regional location (e.g. us-central1)
 GOOGLE_CLOUD_LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
 vertexai.init(project=GOOGLE_CLOUD_PROJECT, location=GOOGLE_CLOUD_LOCATION)
@@ -202,10 +203,17 @@ class CustomGemini(Gemini):
         return Client(
             vertexai=True,
             project=GOOGLE_CLOUD_PROJECT,
-            location="us",
+            location=GOOGLE_CLOUD_LOCATION,
             http_options=types.HttpOptions(
-                base_url="https://aiplatform.us.rep.googleapis.com",
-            )
+                retry_options=types.HttpRetryOptions(
+                    attempts=5,
+                    initial_delay=2.0,
+                    max_delay=60.0,
+                    exp_base=2.0,
+                    jitter=1.0,
+                    http_status_codes=[408, 429, 500, 502, 503, 504],
+                ),
+            ),
         )
 
 captain_agent = Agent(
