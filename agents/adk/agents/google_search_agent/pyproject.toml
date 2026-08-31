@@ -6,14 +6,14 @@ authors = [
     {name = "Your Name", email = "your@email.com"},
 ]
 dependencies = [
-    "google-adk>=1.15.0,<2.0.0",
+    "google-adk>=2.8.0",
     "opentelemetry-instrumentation-google-genai>=0.1.0,<1.0.0",
     "gcsfs>=2024.11.0",
     "google-cloud-logging>=3.12.0,<4.0.0",
     "google-cloud-aiplatform[evaluation,agent-engines]>=1.130.0",
     "protobuf>=6.31.1,<7.0.0",
 ]
-requires-python = ">=3.10,<3.14"
+requires-python = ">=3.14,<3.15"
 
 
 [dependency-groups]
@@ -28,7 +28,7 @@ jupyter = [
     "jupyter>=1.0.0,<2.0.0",
 ]
 eval = [
-    "google-adk[eval]>=1.15.0,<2.0.0",
+    "google-adk[eval]>=2.8.0",
 ]
 lint = [
     "ruff>=0.4.6,<1.0.0",
