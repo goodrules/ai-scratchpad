@@ -47,7 +47,7 @@ Usage:
     - maps_api_key: Google Maps API key for Places search
 """
 
-from google.adk import Agent, Workflow
+from google.adk import Agent, Context, Workflow
 from google.adk.workflow import START
 from google.adk.tools.agent_tool import AgentTool
 from google.genai import types
@@ -78,8 +78,6 @@ ROOT_INSTRUCTION_DATACENTER = """Your primary role is to orchestrate the data ce
 4. Once you have the necessary details, call the `IntakeAgent` tool to process them.
 5. After the `IntakeAgent` is successful, delegate the full analysis to the `LocationStrategyPipeline`.
 Your main function is to manage this workflow conversationally."""
-
-from google.adk import Context
 
 # location_strategy_pipeline
 location_strategy_pipeline_wf = Workflow(

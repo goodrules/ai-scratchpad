@@ -30,7 +30,7 @@ from ..config import (
 )
 from google.adk.tools import google_search
 from google.adk.tools.agent_tool import AgentTool
-from google.adk.tools.mcp_tool import MCPToolset, StreamableHTTPConnectionParams
+from google.adk.tools.mcp_tool import McpToolset, StreamableHTTPConnectionParams
 
 # Load environment variables
 load_dotenv()
@@ -58,7 +58,7 @@ search_tool = AgentTool(search_agent)
 
 # ----- Example of a Third Party Tool (LangChainTool) -----
 try:
-    from google.adk.tools.langchain_tool import LangchainTool
+    from google.adk.integrations.langchain import LangchainTool
     from langchain_community.tools import StackExchangeTool
     from langchain_community.utilities import StackExchangeAPIWrapper
 
@@ -85,7 +85,7 @@ except Exception:
 # ----- Example of an MCP Tool (streamable-http) -----
 # If GitHub token is not available (e.g., in CI), set to None
 try:
-    mcp_tools = MCPToolset(
+    mcp_tools = McpToolset(
         connection_params=StreamableHTTPConnectionParams(
             url=GITHUB_MCP_URL,
             headers={

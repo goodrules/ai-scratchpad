@@ -212,7 +212,7 @@ def find_segment(
     return (travel_from, travel_to, leave_by, arrive_by)
 
 
-def _inspect_itinerary(state: dict[str:Any]):
+def _inspect_itinerary(state: dict[str, Any]):
     """Identifies and returns the itinerary, profile and current datetime from the session state."""
 
     itinerary = state[constants.ITIN_KEY]

@@ -203,3 +203,9 @@ node_modules/
 .next/
 .env.local
 .env.*.local
+
+# Claude Code — share skills, keep per-user permission grants local
+.claude/settings.local.json
+
+# macOS
+.DS_Store

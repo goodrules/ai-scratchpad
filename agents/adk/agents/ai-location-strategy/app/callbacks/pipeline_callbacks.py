@@ -328,7 +328,7 @@ def _extract_python_code_from_content(content: str) -> str:
     return "\n\n# ---\n\n".join(code_blocks)
 
 
-def after_strategy_advisor(
+async def after_strategy_advisor(
     callback_context: Context,
 ) -> types.Content | None:
     """Log completion and save JSON artifact."""
@@ -348,7 +348,7 @@ def after_strategy_advisor(
             json_artifact = types.Part.from_bytes(
                 data=json_str.encode("utf-8"), mime_type="application/json"
             )
-            callback_context.save_artifact(
+            await callback_context.save_artifact(
                 "intelligence_report.json", json_artifact
             )
             logger.info("  Saved artifact: intelligence_report.json")

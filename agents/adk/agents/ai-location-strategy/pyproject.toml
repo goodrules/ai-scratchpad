@@ -8,13 +8,13 @@ authors = [
 ]
 license = {text = "Apache License 2.0"}
 readme = "README.md"
-requires-python = ">=3.10,<3.13"
+requires-python = ">=3.14,<3.15"
 keywords = ["adk", "agents", "gemini", "retail", "location-strategy"]
 
 dependencies = [
     "ag-ui-adk>=0.7.0",
     "fastapi>=0.115.0",
-    "google-adk>=2.0.0",
+    "google-adk>=2.8.0",
     "google-genai>=1.75.0",
     "googlemaps>=4.10.0",
     "pydantic>=2.10.0",
@@ -39,7 +39,7 @@ dev = [
 
 [tool.ruff]
 # Point back to the Master template in the root
-extend = "../../../pyproject.toml"
+extend = "../../../../pyproject.toml"
 
 [tool.ruff.lint.isort]
 # Categorizes the local package for correct import sorting

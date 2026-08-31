@@ -130,18 +130,14 @@ def main(argv: list[str]) -> None:
         else os.getenv("TRAVEL_CONCIERGE_SCENARIO")
     )
     env_vars["TRAVEL_CONCIERGE_SCENARIO"] = initial_states_path
-    map_key = (
-        FLAGS.initial_states_path
-        if FLAGS.initial_states_path
-        else os.getenv("GOOGLE_PLACES_API_KEY")
-    )
+    map_key = FLAGS.map_key if FLAGS.map_key else os.getenv("GOOGLE_PLACES_API_KEY")
     env_vars["GOOGLE_PLACES_API_KEY"] = map_key
 
     print(f"PROJECT: {project_id}")
     print(f"LOCATION: {location}")
     print(f"BUCKET: {bucket}")
     print(f"INITIAL_STATE: {initial_states_path}")
-    print(f"MAP: {map_key[:5]}")
+    print(f"MAP: {'set' if map_key else 'unset'}")
 
     if not project_id:
         print("Missing required environment variable: GOOGLE_CLOUD_PROJECT")

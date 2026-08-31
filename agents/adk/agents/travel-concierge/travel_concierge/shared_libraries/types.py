@@ -234,7 +234,7 @@ class Itinerary(BaseModel):
     start_date: str = Field(description="Trip Start Date in YYYY-MM-DD format")
     end_date: str = Field(description="Trip End Date in YYYY-MM-DD format")
     origin: str = Field(description="Trip Origin, e.g. San Diego")
-    destination: str = (Field(description="Trip Destination, e.g. Seattle"),)
+    destination: str = Field(description="Trip Destination, e.g. Seattle")
     days: list[ItineraryDay] = Field(
         default_factory=list, description="The multi-days itinerary"
     )
