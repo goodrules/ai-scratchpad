@@ -44,13 +44,39 @@ google_search = GoogleSearchTool(bypass_multi_tools_limit=True)
 from google.genai import types
 from vertexai.preview.evaluation import EvalTask
 
+# google-genai leaves GroundingMetadata's pydantic schema unbuilt (MockValSer).
+# ADK's search AgentTool parks one of these in session state, and the
+# parallel-function-call merge path model_dump()s that state — which blows up
+# with "'MockValSer' object is not an instance of 'SchemaSerializer'". Build the
+# schema up front so prompts that fan out to search plus another tool survive.
+types.GroundingMetadata.model_rebuild()
+
 load_dotenv(dotenv_path=Path(__file__).parent / ".env", override=True)
 
 GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
-# Vertex AI EvalTask requires a supported regional location (e.g. us-central1)
-GOOGLE_CLOUD_LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
-vertexai.init(project=GOOGLE_CLOUD_PROJECT, location=GOOGLE_CLOUD_LOCATION)
+# Model calls and the eval service are decoupled: the eval service only runs in a
+# handful of regions, while model availability is widest on the "global" endpoint.
+#   MODEL_LOCATION — where the agent's Gemini calls go.
+#   EVAL_LOCATION  — where EvalTask runs (must be a real region, not "global").
+MODEL_LOCATION = os.getenv("GOOGLE_CLOUD_MODEL_LOCATION", "global")
+
+
+def _resolve_eval_location() -> str:
+    explicit = os.getenv("GOOGLE_CLOUD_EVAL_LOCATION")
+    if explicit:
+        return explicit
+    shared = os.getenv("GOOGLE_CLOUD_LOCATION", "")
+    return shared if shared and shared != "global" else "us-central1"
+
+
+EVAL_LOCATION = _resolve_eval_location()
+
+# Anything that falls back to the ambient env (ADK, google-genai) should hit the
+# model location; the eval service gets its region explicitly via vertexai.init.
+os.environ["GOOGLE_CLOUD_LOCATION"] = MODEL_LOCATION
+
+vertexai.init(project=GOOGLE_CLOUD_PROJECT, location=EVAL_LOCATION)
 
 
 # --- Tools ---
@@ -203,7 +229,7 @@ class CustomGemini(Gemini):
         return Client(
             vertexai=True,
             project=GOOGLE_CLOUD_PROJECT,
-            location=GOOGLE_CLOUD_LOCATION,
+            location=MODEL_LOCATION,
             http_options=types.HttpOptions(
                 retry_options=types.HttpRetryOptions(
                     attempts=5,
@@ -443,7 +469,8 @@ def main():
     config_table.add_column("Key", style="bold")
     config_table.add_column("Value")
     config_table.add_row("Project", GOOGLE_CLOUD_PROJECT or "N/A")
-    config_table.add_row("Location", GOOGLE_CLOUD_LOCATION)
+    config_table.add_row("Model location", MODEL_LOCATION)
+    config_table.add_row("Eval location", EVAL_LOCATION)
     config_table.add_row("Experiment", args.experiment_name)
     console.print(Panel(config_table, title="Cruise Captain Agent Evaluation", border_style="blue"))
 

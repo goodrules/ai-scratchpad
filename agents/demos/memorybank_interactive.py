@@ -1,5 +1,6 @@
 import os
 import asyncio
+import warnings
 import vertexai
 from pathlib import Path
 from dotenv import load_dotenv
@@ -10,6 +11,19 @@ from google.adk.memory import VertexAiMemoryBankService
 from google import adk
 from google.genai import types
 
+# vertexai.Client warns that agentplatform.Client supersedes it, but that class
+# has no `agent_engines` attribute (it splits into memory_banks/runtimes/
+# sessions). ADK's VertexAiMemoryBankService calls api_client.agent_engines.
+# memories.* against 'reasoningEngines/{id}', and Google's own Memory Bank ADK
+# quickstart still creates the bank with vertexai.Client().agent_engines.create().
+# Migrating here would break both. Drop this filter once ADK ships a memory
+# service built on agentplatform.Client.
+warnings.filterwarnings(
+    "ignore",
+    message=r"The vertexai\.Client class is deprecated.*",
+    category=FutureWarning,
+)
+
 load_dotenv(dotenv_path=Path(__file__).parent / ".env", override=True)
 
 APP_NAME = "ghost_ridge_intel_demo"
@@ -17,10 +31,30 @@ GENAI_MODEL_ID = "gemini-3.7-flash"
 PLAYER_ID = "detective_jax"
 
 GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")
-# Vertex AI Memory Bank requires a supported regional location (e.g. us-central1)
-GOOGLE_CLOUD_LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 
-vertexai_client = vertexai.Client(project=GOOGLE_CLOUD_PROJECT, location=GOOGLE_CLOUD_LOCATION)
+# Model calls and Agent Engine are decoupled: Agent Engine / Memory Bank only run
+# in real regions, while newer Gemini models are served from the "global"
+# endpoint and 404 in a region like us-central1.
+#   MODEL_LOCATION         — where Gemini calls go.
+#   AGENT_ENGINE_LOCATION  — where Agent Engine / Memory Bank live.
+MODEL_LOCATION = os.getenv("GOOGLE_CLOUD_MODEL_LOCATION", "global")
+
+
+def _resolve_agent_engine_location():
+    explicit = os.getenv("GOOGLE_CLOUD_AGENT_ENGINE_LOCATION")
+    if explicit:
+        return explicit
+    shared = os.getenv("GOOGLE_CLOUD_LOCATION", "")
+    return shared if shared and shared != "global" else "us-central1"
+
+
+AGENT_ENGINE_LOCATION = _resolve_agent_engine_location()
+
+# ADK's default Gemini client falls back to the ambient env, so point that at the
+# model endpoint. Agent Engine gets its region explicitly via vertexai.Client.
+os.environ["GOOGLE_CLOUD_LOCATION"] = MODEL_LOCATION
+
+vertexai_client = vertexai.Client(project=GOOGLE_CLOUD_PROJECT, location=AGENT_ENGINE_LOCATION)
 
 # Initialize Agent Engine with "Intel" Specific Custom Topics
 print(f"Initializing High-Performance Agent Engine for {APP_NAME}...")
@@ -30,7 +64,7 @@ agent_engine = vertexai_client.agent_engines.create(
         "context_spec": {
             "memory_bank_config": {
                 "generation_config": {
-                    "model": f"projects/{GOOGLE_CLOUD_PROJECT}/locations/{GOOGLE_CLOUD_LOCATION}/publishers/google/models/{GENAI_MODEL_ID}"
+                    "model": f"projects/{GOOGLE_CLOUD_PROJECT}/locations/{MODEL_LOCATION}/publishers/google/models/{GENAI_MODEL_ID}"
                 },
                 "customization_configs": [{
                     "memory_topics": [
@@ -53,7 +87,7 @@ agent_engine = vertexai_client.agent_engines.create(
 memory_bank_service = VertexAiMemoryBankService(
     agent_engine_id=agent_engine.api_resource.name.split("/")[-1],
     project=GOOGLE_CLOUD_PROJECT,
-    location=GOOGLE_CLOUD_LOCATION,
+    location=AGENT_ENGINE_LOCATION,
 )
 # Monkeypatch to reuse the main client and prevent connector leaks
 memory_bank_service._get_api_client = lambda: vertexai_client.aio
@@ -94,6 +128,30 @@ runner = Runner(
     memory_service=memory_bank_service
 )
 
+def final_text(event):
+    """Text of a final-response event, or None.
+
+    A final-response event can carry no content at all (e.g. the turn ended in a
+    model error), and parts may hold thoughts rather than text.
+    """
+    if not event.content or not event.content.parts:
+        return None
+    return "".join(part.text for part in event.content.parts if part.text) or None
+
+
+def events_through_last_user_turn(events):
+    """Drop trailing model/tool events so the history ends on a user turn.
+
+    Memory Bank's generate path rejects a history ending in a model turn, and a
+    session always ends with Vex's reply. The dropped reply comes back on the
+    next pass, once another user turn follows it.
+    """
+    for index in range(len(events) - 1, -1, -1):
+        if events[index].author == "user":
+            return events[: index + 1]
+    return []
+
+
 async def display_memory_state():
     """Retrieves and prints all current memories for the user scope."""
     print("\n" + "="*46)
@@ -116,7 +174,7 @@ async def display_memory_state():
 async def interactive_session():
     # Re-initialize the client inside the active event loop to prevent "Event loop is closed" errors
     global vertexai_client
-    vertexai_client = vertexai.Client(project=GOOGLE_CLOUD_PROJECT, location=GOOGLE_CLOUD_LOCATION)
+    vertexai_client = vertexai.Client(project=GOOGLE_CLOUD_PROJECT, location=AGENT_ENGINE_LOCATION)
     memory_bank_service._get_api_client = lambda: vertexai_client.aio
 
     try:
@@ -133,8 +191,8 @@ async def interactive_session():
             new_message=types.Content(parts=[types.Part(text="[A new soul enters. Greet them concisely and ask a question.]")])
         )
         async for event in initial_events:
-            if event.is_final_response():
-                print(f"{npc_agent.name}: {event.content.parts[0].text}\n")
+            if event.is_final_response() and (text := final_text(event)):
+                print(f"{npc_agent.name}: {text}\n")
 
         while True:
             try:
@@ -154,8 +212,8 @@ async def interactive_session():
                     new_message=types.Content(parts=[types.Part(text="[Greet the user again. Use your long-term memory to show you know who they are.]")])
                 )
                 async for event in events:
-                    if event.is_final_response():
-                        print(f"\n{npc_agent.name}: {event.content.parts[0].text}\n")
+                    if event.is_final_response() and (text := final_text(event)):
+                        print(f"\n{npc_agent.name}: {text}\n")
                 continue
 
             if user_input.lower() in ['exit', 'quit']:
@@ -169,8 +227,8 @@ async def interactive_session():
             )
             
             async for event in events:
-                if event.is_final_response():
-                    print(f"\n{npc_agent.name}: {event.content.parts[0].text}")
+                if event.is_final_response() and (text := final_text(event)):
+                    print(f"\n{npc_agent.name}: {text}")
 
             # Trigger Memory Generation
             print("\n[Updating Memory Bank...]", end="", flush=True)
@@ -181,7 +239,7 @@ async def interactive_session():
                 await memory_bank_service.add_events_to_memory(
                     app_name=APP_NAME,
                     user_id=PLAYER_ID,
-                    events=updated_session.events,
+                    events=events_through_last_user_turn(updated_session.events),
                     custom_metadata={"wait_for_completion": True}
                 )
                 print(" Done.")
