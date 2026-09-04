@@ -65,3 +65,8 @@ ui/*.local
 .idea/
 *.swp
 *~
+
+# Coding Agent Skills
+.agents/
+.claude/
+skills-lock.json

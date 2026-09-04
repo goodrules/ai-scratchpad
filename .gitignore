@@ -204,8 +204,10 @@ node_modules/
 .env.local
 .env.*.local
 
-# Claude Code — share skills, keep per-user permission grants local
-.claude/settings.local.json
+# Claude Code & Coding Agent Skills
+.claude/
+.agents/
+skills-lock.json
 
 # macOS
 .DS_Store
