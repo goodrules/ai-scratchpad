@@ -1,0 +1,67 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Python virtual environments & dependencies
+.venv/
+env/
+venv/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Local Environment & Secrets
+.env
+.env.*
+!.env.example
+
+# Tests & Evaluation (excluded per user request)
+tests/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# ADK Runtime State & Local Databases
+.adk/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+
+# Deployment Metadata & Cloud Runtime Artifacts
+deployment_metadata.json
+deployment_metadata*.json
+*_metadata.json
+.agent_engine_config.json
+
+# Terraform State & Deployment Variables
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+.terraform/
+.terraform.lock.hcl
+
+# Generated Output & Session Artifacts
+PRD.md
+*.log
+
+# Frontend (UI) Dependencies & Builds
+ui/node_modules/
+ui/dist/
+ui/dist-ssr/
+ui/*.local
+
+# OS & Editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~

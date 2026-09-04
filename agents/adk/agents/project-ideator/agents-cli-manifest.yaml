@@ -1,0 +1,14 @@
+name: 'project-ideator'
+acli_version: '1.5.0'
+agent_directory: 'project_ideator'
+region: 'us-central1'
+base_template: 'local_project-ideator'
+generated_at: '2026-09-03T16:25:56.796340+00:00'
+language: 'python'
+create_params:
+  deployment_target: 'cloud_run'
+  session_type: 'none'
+  cicd_runner: 'skip'
+  is_a2a: true
+  agent_gateway: False
+  agent_guidance_filename: 'GEMINI.md'

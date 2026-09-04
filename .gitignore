@@ -210,3 +210,12 @@ node_modules/
 # macOS
 .DS_Store
 .gstack/
+
+# Deployment metadata & cloud runtime state
+deployment_metadata*.json
+*_metadata.json
+.agent_engine_config.json
+*.tfstate
+*.tfstate.*
+*.tfvars
+

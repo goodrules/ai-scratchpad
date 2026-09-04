@@ -1,0 +1,28 @@
+[project]
+name = "project-ideator"
+version = "0.1.0"
+description = "Interactive project ideation agent using ADK, Gemini 3.7 Flash, and A2UI declarative surfaces"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "google-adk[gcp,otel-gcp]>=2.6.0,<3.0.0",
+    "google-genai>=2.20.0",
+    "ag-ui-adk>=0.7.0",
+    "pydantic>=2.0.0",
+    "python-dotenv>=1.0.0",
+    "rich>=13.0.0",
+    "opentelemetry-resourcedetector-gcp<=1.12.0a0",
+    "gcsfs>=2024.11.0",
+    "a2a-sdk[http-server]>=1.0,<2",
+    "aiohttp>=3.13.4",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.23.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
