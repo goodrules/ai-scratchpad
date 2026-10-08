@@ -11,7 +11,7 @@ All agents and evaluation scripts authenticate via Google Cloud **Application De
 ```
 agents/
 ├── adk/
-│   ├── adk_guide/                 # Progressive workshop tutorial & foundational agents
+│   ├── tutorial/                  # Progressive workshop tutorial & foundational agents
 │   │   ├── simple_tutorial.md     # Step-by-step engineering workshop guide
 │   │   ├── my_first_agent/        # Basic single agent with custom Python tools
 │   │   ├── my_2_agent/            # Agent with multi-tool capabilities
@@ -61,7 +61,7 @@ Interact with any ADK agent directly in your terminal:
 
 ```bash
 # Run the basic tutorial utility agent
-uv run adk run agents/adk/adk_guide/my_first_agent
+uv run adk run agents/adk/tutorial/my_first_agent
 
 # Run the Google Search agent
 uv run adk run agents/adk/agents/google_search_agent/app
@@ -87,9 +87,9 @@ Then navigate to `http://localhost:8000` (or the port displayed in your terminal
 
 | Agent / System | Directory | Architecture | Key Capabilities |
 | :--- | :--- | :--- | :--- |
-| **My First Agent** | [`adk/adk_guide/my_first_agent/`](adk/adk_guide/my_first_agent/) | Single `Agent` | Custom Python function tools, input validation, temperature conversion. |
-| **Workflow Agent** | [`adk/adk_guide/workflow_agent_seq/`](adk/adk_guide/workflow_agent_seq/) | Sequential `Workflow` | Multi-step agent handoff pipeline. |
-| **MCP File Agent** | [`adk/adk_guide/mcp_test_agent/`](adk/adk_guide/mcp_test_agent/) | MCP Integration | Model Context Protocol (`@modelcontextprotocol/server-filesystem`). |
+| **My First Agent** | [`adk/tutorial/my_first_agent/`](adk/tutorial/my_first_agent/) | Single `Agent` | Custom Python function tools, input validation, temperature conversion. |
+| **Workflow Agent** | [`adk/tutorial/workflow_agent_seq/`](adk/tutorial/workflow_agent_seq/) | Sequential `Workflow` | Multi-step agent handoff pipeline. |
+| **MCP File Agent** | [`adk/tutorial/mcp_test_agent/`](adk/tutorial/mcp_test_agent/) | MCP Integration | Model Context Protocol (`@modelcontextprotocol/server-filesystem`). |
 | **Google Search Agent** | [`adk/agents/google_search_agent/`](adk/agents/google_search_agent/) | Grounded `Agent` | Native real-time web search grounding via `google_search` tool. |
 | **Short Story Pipeline** | [`adk/agents/short_story_agent/`](adk/agents/short_story_agent/) | State Graph `Workflow` | Planner $\to$ Writer $\to$ Editor $\to$ Refiner loop with conditional exit. |
 | **Document Understanding** | [`adk/agents/doc_understanding/`](adk/agents/doc_understanding/) | Multimodal `Agent` | Custom `LoadFileTool` streaming raw document bytes into Gemini inline parts. |
