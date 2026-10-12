@@ -1,0 +1,12 @@
+/* ==========================================================================
+   Google Cloud Agent Gateway — Light-Mode Neo-Brutalism Design System
+   Modular 7-Piece Architecture (Benchmarked against neobrutalism.dev & retroui.dev)
+   ========================================================================== */
+
+@import url("/static/css/01-shell-palette.css");
+@import url("/static/css/02-typography.css");
+@import url("/static/css/03-cards-containers.css");
+@import url("/static/css/04-buttons-inputs.css");
+@import url("/static/css/05-badges-tables.css");
+@import url("/static/css/06-interactive-states.css");
+@import url("/static/css/07-spacing-rhythm.css");

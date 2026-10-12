@@ -1,0 +1,15 @@
+name: projects/${PROJECT_ID}/locations/${LOCATION}/agentGateways/agent-egress
+protocols:
+  - MCP
+googleManaged:
+  governedAccessPath: AGENT_TO_ANYWHERE
+registries:
+  - //agentregistry.googleapis.com/projects/${PROJECT_ID}/locations/${LOCATION}
+networkConfig:
+  egress:
+    networkAttachment: projects/${PROJECT_ID}/regions/${LOCATION}/networkAttachments/agent-gateway-na
+  dnsPeeringConfig:
+    domains:
+      - policy.internal.
+    targetProject: ${PROJECT_ID}
+    targetNetwork: projects/${PROJECT_ID}/global/networks/${NETWORK_NAME:-default}

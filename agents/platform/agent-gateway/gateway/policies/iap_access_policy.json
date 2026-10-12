@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "resource": "//agentregistry.googleapis.com/projects/${PROJECT_ID}/locations/${LOCATION}",
+  "description": "IAM Unified Access Policy governing Agent Gateway egress to registered MCP servers and internal banking tools.",
+  "bindings": [
+    {
+      "role": "roles/agentgateway.serviceAgent",
+      "members": [
+        "serviceAccount:service-${PROJECT_NUM}@gcp-sa-agentgateway.iam.gserviceaccount.com"
+      ],
+      "description": "Allows Agent Gateway core service to proxy and route governed agent traffic."
+    },
+    {
+      "role": "roles/aiplatform.user",
+      "members": [
+        "serviceAccount:service-${PROJECT_NUM}@gcp-sa-agentgateway.iam.gserviceaccount.com"
+      ],
+      "description": "Allows Agent Gateway to interact with Vertex AI Agent Runtime and Gemini models."
+    },
+    {
+      "role": "roles/modelarmor.user",
+      "members": [
+        "serviceAccount:service-${PROJECT_NUM}@gcp-sa-agentgateway.iam.gserviceaccount.com"
+      ],
+      "description": "Allows Agent Gateway to invoke Model Armor security templates for payload inspection."
+    },
+    {
+      "role": "roles/run.servicesInvoker",
+      "members": [
+        "serviceAccount:service-${PROJECT_NUM}@gcp-sa-agentgateway.iam.gserviceaccount.com"
+      ],
+      "description": "Allows Agent Gateway to forward validated MCP tool invocations to Cloud Run."
+    },
+    {
+      "role": "roles/iap.egressor",
+      "members": [
+        "serviceAccount:service-${PROJECT_NUM}@gcp-sa-aiplatform-re.iam.gserviceaccount.com",
+        "allAuthenticatedUsers"
+      ],
+      "description": "Enforces that callers through Agent Gateway have explicit egress authorization on Agent Registry endpoints."
+    }
+  ]
+}

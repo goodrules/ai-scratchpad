@@ -1,0 +1,114 @@
+{
+  "tools": [
+    {
+      "name": "get_account",
+      "description": "Fetches customer account details, current available balance (USD), daily limits, and status.",
+      "inputSchema": {
+        "properties": {
+          "customer_id": {
+            "description": "Unique identifier of the customer (e.g., 'CUST001', 'CUST005').",
+            "type": "string"
+          }
+        },
+        "required": [
+          "customer_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "lookup_customer_by_phone",
+      "description": "Resolves a customer's banking identity, account ID, and verification status by phone number.",
+      "inputSchema": {
+        "properties": {
+          "phone": {
+            "description": "Customer phone number in 555-xxxx format (e.g., '555-0002').",
+            "type": "string"
+          }
+        },
+        "required": [
+          "phone"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "transfer_to_phone",
+      "description": "Transfers funds from an authenticated customer's account to a recipient identified by phone number.",
+      "inputSchema": {
+        "properties": {
+          "amount": {
+            "description": "Amount in USD to transfer (e.g., 250.0). Must be positive.",
+            "type": "number"
+          },
+          "customer_id": {
+            "description": "Sender's unique customer ID (e.g., 'CUST001').",
+            "type": "string"
+          },
+          "target_phone": {
+            "description": "Recipient phone number in 555-xxxx format (e.g., '555-0002').",
+            "type": "string"
+          }
+        },
+        "required": [
+          "customer_id",
+          "target_phone",
+          "amount"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "pay_bill",
+      "description": "Pays a utility, telecom, or merchant bill directly from customer available balance.",
+      "inputSchema": {
+        "properties": {
+          "account_number": {
+            "description": "Customer's reference account number with the biller.",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Amount in USD to pay towards the bill. Must be positive.",
+            "type": "number"
+          },
+          "biller_name": {
+            "description": "Name of the billing institution or utility provider.",
+            "type": "string"
+          },
+          "customer_id": {
+            "description": "Unique customer ID paying the bill.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "customer_id",
+          "biller_name",
+          "account_number",
+          "amount"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "get_transaction_history",
+      "description": "Retrieves recent cleared transactions and ledger entries for an account.",
+      "inputSchema": {
+        "properties": {
+          "customer_id": {
+            "description": "Unique customer ID.",
+            "type": "string"
+          },
+          "limit": {
+            "default": 10,
+            "description": "Maximum number of transactions to return.",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "customer_id"
+        ],
+        "type": "object"
+      }
+    }
+  ]
+}

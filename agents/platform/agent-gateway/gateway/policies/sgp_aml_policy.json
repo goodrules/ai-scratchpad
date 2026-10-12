@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "projects/${PROJECT_ID}/locations/${LOCATION}/semanticGovernancePolicies/high-value-limit",
+  "displayName": "Banking AML and Velocity Semantic Governance Policy",
+  "description": "Multi-tier Semantic Governance Policy enforcing Anti-Money Laundering (AML) velocity thresholds, high-risk customer watchlist restrictions, and cumulative 24-hour spend limits at the Agent Gateway boundary.",
+  "version": "1.0.0",
+  "failOpen": false,
+  "enforcementMode": "ENFORCE",
+  "rules": [
+    {
+      "ruleId": "SGP-01",
+      "name": "AML Transfer Value and Risk Score Restriction",
+      "description": "Restricts single transfer values exceeding $1,000 USD for standard customer accounts, and blocks all automated outbound transactions for customers with AML risk scores exceeding 50.",
+      "target": {
+        "mcpServers": [
+          "projects/${PROJECT_ID}/locations/${LOCATION}/mcpServers/banking-mcp-server"
+        ],
+        "tools": [
+          "transfer_to_phone",
+          "pay_bill"
+        ]
+      },
+      "naturalLanguageConstraint": "Block any transfer value exceeding USD 1000 for STANDARD tier accounts. Block all outbound transactions if customer risk_score is greater than 50.",
+      "parameters": {
+        "standardTierTransferLimitUsd": 1000.0,
+        "maxAllowedRiskScore": 50,
+        "currency": "USD"
+      },
+      "action": "DENY",
+      "remediation": "Escalate to Compliance and AML Risk Operations Desk for enhanced customer due diligence."
+    },
+    {
+      "ruleId": "SGP-02",
+      "name": "Cumulative Daily Limit Enforcement",
+      "description": "Restricts any transfer or bill payment that would cause a customer's cumulative 24-hour transaction total to exceed their assigned daily limit.",
+      "target": {
+        "mcpServers": [
+          "projects/${PROJECT_ID}/locations/${LOCATION}/mcpServers/banking-mcp-server"
+        ],
+        "tools": [
+          "transfer_to_phone",
+          "pay_bill"
+        ]
+      },
+      "naturalLanguageConstraint": "Block any transfer or payment that causes cumulative 24-hour spend to exceed customer daily_limit.",
+      "action": "DENY",
+      "remediation": "Request customer to submit an identity-verified temporary limit increase request."
+    }
+  ],
+  "audit": {
+    "logAllDecisions": true,
+    "destination": "cloudlogging.googleapis.com"
+  }
+}

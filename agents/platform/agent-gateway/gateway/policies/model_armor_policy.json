@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "projects/${PROJECT_ID}/locations/${LOCATION}/templates/banking-model-armor-template",
+  "displayName": "Banking Model Armor Security Filter",
+  "description": "Model Armor security template enforcing real-time payload sanitization, prompt injection defense, jailbreak detection, and sensitive data protection (PII) at the Agent Gateway boundary.",
+  "filterConfig": {
+    "piAndJailbreakFilterSettings": {
+      "enforcement": "BLOCK",
+      "confidenceLevel": "MEDIUM_AND_ABOVE",
+      "heuristicPatterns": [
+        "ignore previous instructions",
+        "disregard all prior instructions",
+        "system override",
+        "you are now DAN",
+        "dan mode",
+        "bypass safety guidelines",
+        "jailbreak"
+      ]
+    },
+    "sdpSettings": {
+      "sensitiveDataProtection": "BLOCK",
+      "infoTypes": [
+        "US_SOCIAL_SECURITY_NUMBER",
+        "CREDIT_CARD_NUMBER",
+        "BANK_ACCOUNT_NUMBER"
+      ],
+      "enforcement": "BLOCK"
+    },
+    "maliciousUriFilterSettings": {
+      "enforcement": "BLOCK"
+    },
+    "raiSettings": {
+      "hateSpeech": "BLOCK_MEDIUM_AND_ABOVE",
+      "harassment": "BLOCK_MEDIUM_AND_ABOVE",
+      "sexual": "BLOCK_MEDIUM_AND_ABOVE",
+      "dangerousContent": "BLOCK_MEDIUM_AND_ABOVE"
+    }
+  }
+}
