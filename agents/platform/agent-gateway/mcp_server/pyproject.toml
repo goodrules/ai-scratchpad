@@ -1,0 +1,16 @@
+[project]
+name = "banking-mcp-server"
+version = "1.0.0"
+description = "Enterprise FastMCP Banking Tool Server for Google Cloud Agent Gateway"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.2.0,<2.0.0",
+    "starlette>=0.35.0",
+    "pydantic>=2.7.0",
+    "uvicorn[standard]>=0.28.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

@@ -1,0 +1,451 @@
+/* ==========================================================================
+   Piece 7: Spacing, Rhythm, and Layout Proportions (07-spacing-rhythm.css)
+   Neo-Brutalist Grid Architecture, Compact Above-the-Fold Rhythm & Alignment
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Exact Outer Grid Edge Alignment (Header, Metrics Ribbon & Main Grid)
+   -------------------------------------------------------------------------- */
+
+.app-header {
+  width: 100%;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.header-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+.metrics-ribbon {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 14px 24px 0 24px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+.metric-card {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.metric-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. Main 3-Column Grid Layout & Proportions
+   -------------------------------------------------------------------------- */
+
+.main-grid {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 14px 24px 20px 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.25fr) minmax(0, 1.05fr);
+  gap: 16px;
+  align-items: start;
+  box-sizing: border-box;
+}
+
+.panel-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.panel-card {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.panel-header {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 9px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.panel-body {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.panel-body-audit {
+  padding: 10px 12px;
+  gap: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Compact Internal Section Spacing & Balanced 3-Column Height Rhythm
+   -------------------------------------------------------------------------- */
+
+.section-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  width: 100%;
+}
+
+.execution-mode-container,
+.customer-selector-container,
+.scenarios-section {
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.customer-card-preview {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cust-row-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 0;
+  min-width: 0;
+}
+
+.cust-identity-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.cust-phone-line {
+  margin: 0;
+  padding: 0;
+  border-bottom: none;
+}
+
+.scenario-buttons-list {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 7px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-scenario {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.btn-scenario .scenario-name {
+  min-width: 0;
+  flex: 1 1 0%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chat-container {
+  height: 210px !important;
+  min-height: 210px;
+  max-height: 210px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chat-messages {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chat-input-bar {
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.waterfall-header-banner {
+  padding: 10px 14px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.banner-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.banner-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.waterfall-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.step-card {
+  padding: 12px 14px;
+  gap: 7px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.step-title-group,
+.step-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inspection-drawer {
+  margin-top: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.drawer-header {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.drawer-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drawer-body {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.drawer-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.drawer-tab-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.policy-controls-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.policy-toggles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.policy-toggle-item {
+  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0px 0px #000000;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.policy-toggle-item.toggle-span-full {
+  grid-column: span 2;
+}
+
+.toggle-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.policy-slider-item {
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #ffffff;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  box-shadow: 2px 2px 0px 0px #000000;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.audit-feed-container {
+  max-height: 184px !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1280px) {
+  .app-header {
+    padding: 10px 20px;
+    flex-wrap: wrap;
+  }
+
+  .header-badges {
+    flex-wrap: wrap;
+  }
+
+  .metrics-ribbon {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 14px 20px 0 20px;
+  }
+
+  .main-grid {
+    grid-template-columns: 1fr;
+    padding: 14px 20px 24px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-ribbon {
+    grid-template-columns: 1fr;
+    padding: 12px 16px 0 16px;
+  }
+
+  .main-grid {
+    padding: 12px 16px 24px 16px;
+  }
+
+  .scenario-buttons-list,
+  .policy-toggles-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .policy-toggle-item.toggle-span-full {
+    grid-column: span 1;
+  }
+}

@@ -1,0 +1,306 @@
+/* ==========================================================================
+   Piece 6: Interactive Hover, Press, Focus-Visible, Tab Bar & Toast States
+   Authentic Light-Mode Neo-Brutalism (Benchmarked: neobrutalism.dev & retroui.dev)
+   Round 2 Critic Refinement: Contiguous Segmented Tab Bar vs Standalone Button Physics
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Contiguous Segmented Tab Bars (.mode-selector-group & .drawer-tab-group)
+      Modeled directly on retroui_card.png (Base UI | Radix UI | React Aria)
+      and neobrutalism_tabs.png (Preview | Code)
+   -------------------------------------------------------------------------- */
+
+.mode-selector-group {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 0 !important;
+  width: 100%;
+  border: 2.5px solid #000000 !important;
+  border-radius: 5px !important;
+  box-shadow: 4px 4px 0px 0px #000000 !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+}
+
+.mode-selector-group .btn-exec-mode {
+  border: none !important;
+  border-right: 2px solid #000000 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  background: #ffffff;
+  color: #000000;
+  padding: 9px 8px;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.mode-selector-group .btn-exec-mode:last-child {
+  border-right: none !important;
+}
+
+.drawer-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.drawer-tab-group {
+  display: inline-flex;
+  border: 2.5px solid #000000;
+  border-radius: 5px;
+  box-shadow: 3px 3px 0px 0px #000000;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.drawer-tab-group .drawer-tab,
+.drawer-tab {
+  border: none !important;
+  border-right: 2px solid #000000 !important;
+  border-radius: 0 !important;
+  padding: 6px 12px;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 11px;
+  font-weight: 800;
+  color: #000000;
+  background: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.drawer-tab-group .drawer-tab:last-child,
+.drawer-tab:last-child {
+  border-right: none !important;
+}
+
+/* Segmented Tab Bar Active & Hover States (Flat inside contiguous frame) */
+.btn-exec-mode.active,
+.drawer-tab.active {
+  background: #ffdb33 !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-exec-mode:hover:not(.active),
+.drawer-tab:hover:not(.active) {
+  background: #fff3b0 !important;
+  color: #000000 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-exec-mode:active,
+.drawer-tab:active {
+  background: #facc15 !important;
+  color: #000000 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.drawer-header {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.12s ease;
+}
+
+.drawer-header:hover {
+  background: #ffdb33;
+  color: #000000;
+}
+
+/* --------------------------------------------------------------------------
+   2. Standalone Button Hover & Active Press Physics
+      (.btn-scenario, .btn-header-reset, .btn-chat-send, .btn-chat-clear,
+       .btn-apply-runtime, .btn-discover-runtimes, .btn-sync-traces, .btn-copy-json)
+   -------------------------------------------------------------------------- */
+
+.btn-scenario,
+.btn-header-reset,
+.btn-chat-send,
+.btn-chat-clear,
+.btn-apply-runtime,
+.btn-discover-runtimes,
+.btn-sync-traces,
+.btn-copy-json {
+  transition: transform 0.12s cubic-bezier(0.2, 0, 0, 1),
+              box-shadow 0.12s cubic-bezier(0.2, 0, 0, 1),
+              background-color 0.12s ease,
+              color 0.12s ease;
+  will-change: transform, box-shadow;
+}
+
+.btn-scenario:hover:not(:disabled),
+.btn-header-reset:hover:not(:disabled),
+.btn-chat-send:hover:not(:disabled),
+.btn-chat-clear:hover:not(:disabled),
+.btn-apply-runtime:hover:not(:disabled),
+.btn-discover-runtimes:hover:not(:disabled),
+.btn-sync-traces:hover:not(:disabled),
+.btn-copy-json:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px 0px #000000;
+  background: #ffdb33;
+  color: #000000;
+}
+
+.btn-scenario:hover .nb-bullet {
+  background: #ffffff;
+}
+
+/* Mechanical Active Press Snap into Shadow for Standalone Buttons */
+.btn-scenario:active:not(:disabled),
+.btn-header-reset:active:not(:disabled),
+.btn-chat-send:active:not(:disabled),
+.btn-chat-clear:active:not(:disabled),
+.btn-apply-runtime:active:not(:disabled),
+.btn-discover-runtimes:active:not(:disabled),
+.btn-sync-traces:active:not(:disabled),
+.btn-copy-json:active:not(:disabled) {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 0px 0px 0px 0px #000000 !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. Interactive Cards & Flat Table Row Hover States
+   -------------------------------------------------------------------------- */
+
+.metric-card {
+  transition: transform 0.14s cubic-bezier(0.2, 0, 0, 1),
+              box-shadow 0.14s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.metric-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px #000000;
+}
+
+.step-card {
+  transition: transform 0.12s cubic-bezier(0.2, 0, 0, 1),
+              box-shadow 0.12s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.step-card:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0px 0px #000000;
+}
+
+/* Flat Table Row Hover inside Bordered Audit Table */
+.audit-card {
+  transition: background-color 0.1s ease, color 0.1s ease;
+  cursor: pointer;
+}
+
+.audit-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  background: #ffdb33 !important;
+  color: #000000 !important;
+}
+
+.audit-card:active {
+  transform: none !important;
+  box-shadow: none !important;
+  background: #facc15 !important;
+  color: #000000 !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. Focus-Visible Rings & Input Focus States
+   -------------------------------------------------------------------------- */
+
+.chat-input:focus,
+.customer-dropdown:focus,
+.runtime-text-input:focus,
+.runtime-select-dropdown:focus {
+  background: #fffdf7;
+  border-color: #000000;
+  box-shadow: 4px 4px 0px 0px #5294ff;
+  outline: 2px solid #000000;
+  outline-offset: 0px;
+}
+
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+/* Policy Toggle & Range Slider Interactive States */
+.policy-toggle-item:hover,
+.policy-slider-item:hover {
+  background: #fffdf7;
+}
+
+.switch:hover .slider-round {
+  box-shadow: 3px 3px 0px 0px #000000;
+}
+
+/* --------------------------------------------------------------------------
+   5. Neo-Brutalist Toast Notifications (.toast-container, .toast)
+   -------------------------------------------------------------------------- */
+
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  background: #ffffff;
+  border: 2.5px solid #000000;
+  border-radius: 6px;
+  box-shadow: 5px 5px 0px 0px #000000;
+  color: #000000;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-weight: 800;
+  font-size: 12.5px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 380px;
+  animation: nb-toast-slide-in 0.18s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.toast.success {
+  background: #4ade80;
+  color: #000000;
+}
+
+.toast.info {
+  background: #ffdb33;
+  color: #000000;
+}
+
+.toast.error {
+  background: #ff6b6b;
+  color: #000000;
+}
+
+@keyframes nb-toast-slide-in {
+  from {
+    opacity: 0;
+    transform: translate(16px, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}

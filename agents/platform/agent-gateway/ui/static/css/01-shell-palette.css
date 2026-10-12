@@ -1,0 +1,273 @@
+/* ==========================================================================
+   Piece 1: Neo-Brutalist Shell & Off-White Palette (01-shell-palette.css)
+   Benchmarked against retroui.dev (#f9f5eb warm cream + #ffdb33 yellow marker)
+   and neobrutalism.dev (32px architectural grid + hard 0px-blur offset shadows)
+   ========================================================================== */
+
+:root {
+  /* Surface & Canvas Tokens (Light-Mode Neo-Brutalism) */
+  --bg-canvas: #f9f5eb;
+  --bg-primary: #f9f5eb;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1ecde;
+  --bg-card: #ffffff;
+  --bg-hover: #ffdb33;
+  --bg-muted: #ebe4d1;
+
+  /* High-Contrast Foreground Ink */
+  --text-primary: #000000;
+  --text-secondary: #1f1f1f;
+  --text-muted: #4a463d;
+  --ink-black: #000000;
+
+  /* Crisp Solid Black Structural Borders */
+  --border-color: #000000;
+  --border-focus: #000000;
+  --border-thin: 2px solid #000000;
+  --border-thick: 2.5px solid #000000;
+  --border-heavy: 3px solid #000000;
+
+  /* Neo-Brutalist Signature Accent Fills (RetroUI + NeoBrutalism.dev) */
+  --nb-yellow: #ffdb33;
+  --nb-yellow-hover: #facc15;
+  --nb-blue: #5294ff;
+  --nb-blue-light: #dbeafe;
+  --nb-mint: #4ade80;
+  --nb-mint-light: #dcfce7;
+  --nb-coral: #ff6b6b;
+  --nb-coral-light: #fee2e2;
+  --nb-violet: #c4b5fd;
+  --nb-violet-light: #ede9fe;
+  --nb-orange: #ff9f43;
+
+  /* Semantic Google & Governance Accents */
+  --google-blue: #5294ff;
+  --google-blue-hover: #3b82f6;
+  --google-blue-subtle: #dbeafe;
+
+  /* High-Contrast Semantic Status Tokens */
+  --status-success: #000000;
+  --status-success-bg: #4ade80;
+  --status-success-border: #000000;
+
+  --status-danger: #000000;
+  --status-danger-bg: #ff6b6b;
+  --status-danger-border: #000000;
+
+  --status-warning: #000000;
+  --status-warning-bg: #ffdb33;
+  --status-warning-border: #000000;
+
+  /* Zero-Blur Hard Offset Shadows */
+  --shadow-xs: 2px 2px 0px 0px #000000;
+  --shadow-sm: 3px 3px 0px 0px #000000;
+  --shadow-md: 4px 4px 0px 0px #000000;
+  --shadow-lg: 6px 6px 0px 0px #000000;
+
+  /* Crisp Geometric Radii */
+  --radius-nb: 6px;
+  --radius-sm: 5px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-full: 9999px;
+
+  /* Typography Stack */
+  --font-display: 'Archivo Black', 'Space Grotesk', sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-sans: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ==========================================================================
+   Global Reset & Architectural Grid Canvas (neobrutalism.dev 32px Grid)
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light;
+}
+
+body {
+  background-color: #f9f5eb;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.085) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.085) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: top center;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.45;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* High-Contrast Selection Highlight (RetroUI Yellow + Pure Black Ink) */
+::selection {
+  background-color: var(--nb-yellow);
+  color: var(--ink-black);
+}
+
+::-moz-selection {
+  background-color: var(--nb-yellow);
+  color: var(--ink-black);
+}
+
+/* Custom Neo-Brutalist Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-left: 2px solid #000000;
+  border-top: 2px solid #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--nb-yellow);
+  border: 2px solid #000000;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--nb-blue);
+}
+
+/* ==========================================================================
+   Top Application Shell Header (.app-header)
+   Single-row warm butter-cream bar with RetroUI yellow top stripe & flush badges
+   ========================================================================== */
+.app-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+  gap: 16px !important;
+  width: 100%;
+  padding: 10px 24px !important;
+  background: #fffdf7 !important;
+  border-top: 6px solid #ffdb33 !important;
+  border-bottom: 3px solid #000000 !important;
+  outline: 2px solid #000000;
+  box-shadow: 0 4px 0 0 #000000 !important;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.brand-section {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  flex-shrink: 0;
+  min-width: 0;
+}
+
+.brand-text-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.app-header .brand-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap;
+}
+
+/* Iconic RetroUI Yellow Highlight Marker Treatment */
+.brand-title-main {
+  background: linear-gradient(180deg, transparent 55%, #ffdb33 55%);
+  padding: 0 4px;
+  border-radius: 2px;
+  display: inline-block;
+  color: #000000;
+}
+
+.brand-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-nb);
+  background-color: var(--nb-yellow);
+  border: 2.5px solid #000000;
+  box-shadow: 3px 3px 0px 0px #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  flex-shrink: 0;
+  user-select: none;
+  transition: transform 0.12s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.12s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.brand-logo:hover {
+  transform: translate(1.5px, 1.5px);
+  box-shadow: 1.5px 1.5px 0px 0px #000000;
+  background-color: var(--nb-yellow-hover);
+}
+
+/* Flush Right Single-Row Header Badges Bar */
+.app-header .header-badges {
+  margin-left: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+  flex-shrink: 0;
+}
+
+.app-header .header-badge {
+  padding: 5px 9px;
+  font-size: 11px;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.app-header .btn-header-reset {
+  padding: 5px 10px;
+  font-size: 11px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Live Status Pulse Indicator */
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--nb-mint);
+  border: 1.5px solid #000000;
+  display: inline-block;
+  flex-shrink: 0;
+  box-shadow: 1px 1px 0px 0px #000000;
+  animation: nb-pulse 2s infinite ease-in-out;
+}
+
+@keyframes nb-pulse {
+  0%, 100% {
+    transform: scale(1);
+    background-color: var(--nb-mint);
+  }
+  50% {
+    transform: scale(1.18);
+    background-color: #22c55e;
+  }
+}
