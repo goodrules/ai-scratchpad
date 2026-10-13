@@ -1,7 +1,7 @@
 [project]
 name = "project-ideator"
 version = "0.1.0"
-description = "Interactive project ideation agent using ADK, Gemini 3.7 Flash, and A2UI declarative surfaces"
+description = "Interactive project ideation agent using ADK, Gemini 3.8 Flash, and A2UI declarative surfaces"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [

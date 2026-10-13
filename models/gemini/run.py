@@ -34,7 +34,7 @@ def resolve(names: list[str]) -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Run one or more Gemini 3/3.5/3.7 demos.",
+        description="Run one or more Gemini 3/3.5/3.8 demos.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "demos:  " + ", ".join(sorted(DEMOS)) + "\n"

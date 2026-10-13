@@ -208,9 +208,9 @@ This agent supports multiple Gemini model families. Edit `app/config.py` to swit
 
 | Model Option | Text Models | Image Model | Notes |
 |--------------|-------------|-------------|-------|
-| **Option 1: Gemini 2.5 Pro** | `gemini-2.5-pro` | `gemini-3-pro-image-preview` | **Recommended** - Stable, production-ready |
-| **Option 2: Gemini 3.1 Pro Preview** | `gemini-3.1-pro-preview` | `gemini-3-pro-image-preview` | Latest features - may throw 503 "model overloaded" errors |
-| **Option 3: Gemini 3 Flash Preview** | `gemini-3.7-flash` | `gemini-3.7-flash` | Fastest, lowest cost |
+| **Option 1: Gemini 2.5 Pro** | `gemini-2.5-pro` | `gemini-nano-banana-2.1` | **Recommended** - Stable, production-ready |
+| **Option 2: Gemini 3.1 Pro Preview** | `gemini-3.1-pro-preview` | `gemini-nano-banana-2.1` | Latest features - may throw 503 "model overloaded" errors |
+| **Option 3: Gemini 3.8 Flash** | `gemini-3.8-flash` | `gemini-nano-banana-2.1` | Fastest, lowest cost |
 
 **Gemini 3 Documentation:**
 - [Vertex AI - Get started with Gemini 3](https://cloud.google.com/vertex-ai/generative-ai/docs/start/get-started-with-gemini-3)
@@ -227,10 +227,10 @@ To switch models, uncomment the desired option in `app/config.py`:
 # ...
 
 # Option 2: Gemini 3.1 Pro Preview (latest features, may have availability issues)
-FAST_MODEL = "gemini-3.7-flash"
-PRO_MODEL = "gemini-3.7-flash"
-CODE_EXEC_MODEL = "gemini-3.7-flash"
-IMAGE_MODEL = "gemini-3.1-flash-image"
+FAST_MODEL = "gemini-3.8-flash"
+PRO_MODEL = "gemini-3.8-flash"
+CODE_EXEC_MODEL = "gemini-3.8-flash"
+IMAGE_MODEL = "gemini-nano-banana-2.1"
 ```
 
 > **Note:** If you encounter `503 UNAVAILABLE - model overloaded` errors, switch to Gemini 2.5 Pro for better reliability.

@@ -27,7 +27,7 @@ warnings.filterwarnings(
 load_dotenv(dotenv_path=Path(__file__).parent / ".env", override=True)
 
 APP_NAME = "ghost_ridge_intel_demo"
-GENAI_MODEL_ID = "gemini-3.7-flash"
+GENAI_MODEL_ID = "gemini-3.8-flash"
 PLAYER_ID = "detective_jax"
 
 GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT")

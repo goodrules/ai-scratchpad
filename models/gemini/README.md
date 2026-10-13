@@ -1,17 +1,17 @@
-# Gemini 3/3.5/3.7 cookbook
+# Gemini 3/3.5/3.8 cookbook
 
-Small, self-contained demos of Gemini 3/3.5/3.7 features on Vertex AI, plus the observability wiring
+Small, self-contained demos of Gemini 3/3.5/3.8 features on Vertex AI, plus the observability wiring
 (Cloud Trace, BigQuery request/response logging, per-caller token attribution) and the SQL to
 report on it. Each demo is meant to be **read and copied** — the interesting part is one or two
 lines of config; the rest is shared plumbing in `_common.py`.
 
-Models are the latest of each tier only — Gemini Pro (`gemini-3.1-pro-preview`), Gemini Flash (`gemini-3.7-flash`), and Gemini Flash-Lite (`gemini-3.5-flash-lite`) — and non-model-specific demos default to **Flash** (`gemini-3.7-flash`).
+Models are the latest of each tier only — Gemini Pro (`gemini-3.1-pro-preview`), Gemini Flash (`gemini-3.8-flash`), and Gemini Flash-Lite (`gemini-3.5-flash-lite`) — and non-model-specific demos default to **Flash** (`gemini-3.8-flash`).
 
 ## What's here
 
 | File | What it demonstrates |
 | --- | --- |
-| `models.py` | Run one prompt across every Gemini 3/3.5/3.7 model. |
+| `models.py` | Run one prompt across every Gemini 3/3.5/3.8 model. |
 | `thinking.py` | The three thinking tiers (`low`/`medium`/`high`) on one prompt. |
 | `search.py` | Google Search grounding (answers from live web results). |
 | `url_context.py` | URL Context tool (model fetches and reads URLs in the prompt). |

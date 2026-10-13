@@ -5,7 +5,7 @@ demos plus the observability wiring around them.
 
 ## Layout
 
-- [`models/gemini/`](models/gemini/README.md) — runnable demos of Gemini 3/3.5/3.7 features (models, thinking, search, maps, code
+- [`models/gemini/`](models/gemini/README.md) — runnable demos of Gemini 3/3.5/3.8 features (models, thinking, search, maps, code
   execution, URL context) plus shared client/observability setup in `_common.py`, and BigQuery
   token-usage SQL in `models/gemini/sql/`.
 - [`models/claude/`](models/claude/README.md) — runnable demos of Anthropic Claude on Vertex AI (models, thinking, streaming,

@@ -1,4 +1,4 @@
-"""Run gemini-3.7-flash at thinking tiers (low/medium/high)."""
+"""Run gemini-3.8-flash at thinking tiers (low/medium/high)."""
 
 from __future__ import annotations
 

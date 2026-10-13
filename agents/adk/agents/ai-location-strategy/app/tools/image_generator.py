@@ -15,7 +15,7 @@
 """Gemini image generation tool for creating infographics.
 
 Uses Google AI Studio (API key) for authentication.
-Uses gemini-3.1-flash-image model for image generation.
+Uses gemini-nano-banana-2.1 model for image generation.
 Requires GOOGLE_API_KEY environment variable to be set.
 
 Saves the generated infographic directly as an artifact using tool_context.save_artifact()
@@ -53,7 +53,7 @@ async def generate_infographic(
     """Generate an infographic image using Gemini's image generation capabilities.
 
     This tool creates a professional infographic visualizing the location
-    intelligence report data using gemini-3.1-flash-image model via AI Studio.
+    intelligence report data using gemini-nano-banana-2.1 model via AI Studio.
 
     The generated image is automatically saved as an artifact named "infographic.png"
     which can be viewed in the adk web UI.
@@ -128,7 +128,7 @@ Create an infographic that a business executive would use in a board presentatio
                 ),
             )
 
-        # Generate the image using gemini-3.1-flash-image model
+        # Generate the image using gemini-nano-banana-2.1 model
         response = await generate_with_retry()
 
         # Check for successful generation

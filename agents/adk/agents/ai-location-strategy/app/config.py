@@ -64,13 +64,13 @@ else:
 MAPS_API_KEY = os.environ.get("MAPS_API_KEY", "")
 # Model Configuration
 # ============================================================================
-# Default models standardizing on gemini-3.7-flash
+# Default models standardizing on gemini-3.8-flash
 # ============================================================================
 
-FAST_MODEL = "gemini-3.7-flash"
-PRO_MODEL = "gemini-3.7-flash"
-CODE_EXEC_MODEL = "gemini-3.7-flash"
-IMAGE_MODEL = "gemini-3.1-flash-image"
+FAST_MODEL = "gemini-3.8-flash"
+PRO_MODEL = "gemini-3.8-flash"
+CODE_EXEC_MODEL = "gemini-3.8-flash"
+IMAGE_MODEL = "gemini-nano-banana-2.1"
 
 # Retry Configuration (native HttpRetryOptions for 429 and transient errors)
 RETRY_INITIAL_DELAY = 2  # seconds
